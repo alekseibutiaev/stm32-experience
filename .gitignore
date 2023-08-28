@@ -1,0 +1,11 @@
+*.launch
+*Debug*
+*Release*
+build*
+x64
+.vs
+*.user
+*.opendb
+*.db
+*.suo
+*~
