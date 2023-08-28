@@ -10,7 +10,7 @@
           "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
           "BOARD_NUCLEO": "OFF",
           "DUMP_ASM": "OFF",
-          "MCU": "F105R8"
+          "MCU_TYPE": "F105R8"
         } 
       },
       "Debug F105R8 NUCLEO": {
@@ -20,7 +20,7 @@
           "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
           "BOARD_NUCLEO": "ON",
           "DUMP_ASM": "OFF",
-          "MCU": "F105R8"
+          "MCU_TYPE": "F105R8"
         } 
       },
       "Release F105R8": {
@@ -30,7 +30,7 @@
           "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
           "BOARD_NUCLEO": "OFF",
           "DUMP_ASM": "OFF",
-          "MCU": "F105R8"
+          "MCU_TYPE": "F105R8"
         } 
       },
       "Release F105R8 NUCLEO": {
@@ -40,7 +40,7 @@
           "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
           "BOARD_NUCLEO": "ON",
           "DUMP_ASM": "OFF",
-          "MCU": "F105R8"
+          "MCU_TYPE": "F105R8"
         } 
       },
       "Debug F105RB": {
@@ -50,7 +50,7 @@
           "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
           "BOARD_NUCLEO": "OFF",
           "DUMP_ASM": "OFF",
-          "MCU": "F105RB"
+          "MCU_TYPE": "F105RB"
         } 
       },
       "Debug F105RB NUCLEO": {
@@ -60,7 +60,7 @@
           "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
           "BOARD_NUCLEO": "ON",
           "DUMP_ASM": "OFF",
-          "MCU": "F105RB"
+          "MCU_TYPE": "F105RB"
         } 
       },
       "Release F105RB": {
@@ -70,7 +70,7 @@
           "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
           "BOARD_NUCLEO": "OFF",
           "DUMP_ASM": "OFF",
-          "MCU": "F105RB"
+          "MCU_TYPE": "F105RB"
         } 
       },
       "Release F105RB NUCLEO": {
@@ -80,7 +80,7 @@
           "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
           "BOARD_NUCLEO": "ON",
           "DUMP_ASM": "OFF",
-          "MCU": "F105RB"
+          "MCU_TYPE": "F105RB"
         } 
       },
       "Debug F105RC": {
@@ -90,7 +90,7 @@
           "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
           "BOARD_NUCLEO": "OFF",
           "DUMP_ASM": "OFF",
-          "MCU": "F105RC"
+          "MCU_TYPE": "F105RC"
         } 
       },
       "Debug F105RC NUCLEO": {
@@ -100,7 +100,7 @@
           "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
           "BOARD_NUCLEO": "ON",
           "DUMP_ASM": "OFF",
-          "MCU": "F105RC"
+          "MCU_TYPE": "F105RC"
         } 
       },
       "Release F105RC": {
@@ -110,7 +110,7 @@
           "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
           "BOARD_NUCLEO": "OFF",
           "DUMP_ASM": "OFF",
-          "MCU": "F105RC"
+          "MCU_TYPE": "F105RC"
         } 
       },
       "Release F105RC NUCLEO": {
@@ -120,7 +120,7 @@
           "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
           "BOARD_NUCLEO": "ON",
           "DUMP_ASM": "OFF",
-          "MCU": "F105RC"
+          "MCU_TYPE": "F105RC"
         } 
       },
       "Debug F107RB": {
@@ -130,7 +130,7 @@
           "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
           "BOARD_NUCLEO": "OFF",
           "DUMP_ASM": "OFF",
-          "MCU": "F107RB"
+          "MCU_TYPE": "F107RB"
         } 
       },
       "Debug F107RB NUCLEO": {
@@ -140,7 +140,7 @@
           "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
           "BOARD_NUCLEO": "ON",
           "DUMP_ASM": "OFF",
-          "MCU": "F107RB"
+          "MCU_TYPE": "F107RB"
         } 
       },
       "Release F107RB": {
@@ -150,7 +150,7 @@
           "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
           "BOARD_NUCLEO": "OFF",
           "DUMP_ASM": "OFF",
-          "MCU": "F107RB"
+          "MCU_TYPE": "F107RB"
         } 
       },
       "Release F107RB NUCLEO": {
@@ -160,7 +160,7 @@
           "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
           "BOARD_NUCLEO": "ON",
           "DUMP_ASM": "OFF",
-          "MCU": "F107RB"
+          "MCU_TYPE": "F107RB"
         } 
       },
       "Debug F107RC": {
@@ -170,7 +170,7 @@
           "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
           "BOARD_NUCLEO": "OFF",
           "DUMP_ASM": "OFF",
-          "MCU": "F107RC"
+          "MCU_TYPE": "F107RC"
         } 
       },
       "Debug F107RC NUCLEO": {
@@ -180,7 +180,7 @@
           "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
           "BOARD_NUCLEO": "ON",
           "DUMP_ASM": "OFF",
-          "MCU": "F107RC"
+          "MCU_TYPE": "F107RC"
         }
       },
       "Release F107C": {
@@ -190,7 +190,7 @@
           "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
           "BOARD_NUCLEO": "OFF",
           "DUMP_ASM": "OFF",
-          "MCU": "F107RC"
+          "MCU_TYPE": "F107RC"
         } 
       },
       "Release F107C NUCLEO": {
@@ -200,7 +200,7 @@
           "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
           "BOARD_NUCLEO": "ON",
           "DUMP_ASM": "OFF",
-          "MCU": "F107RC"
+          "MCU_TYPE": "F107RC"
         }
       }
     }

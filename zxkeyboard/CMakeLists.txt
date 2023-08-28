@@ -15,12 +15,12 @@ cmake_minimum_required(VERSION 3.20)
 ###################### CONSTANTS ######################################
 set (PROJECT_TYPE_EXECUTABLE          "exe")
 set (PROJECT_TYPE_STATIC_LIBRARY      "static-lib")
-set (MCPU_CORTEX_M0				      "-mcpu=cortex-m0")
-set (MCPU_CORTEX_M0PLUS				  "-mcpu=cortex-m0plus")
-set (MCPU_CORTEX_M3				      "-mcpu=cortex-m3")
-set (MCPU_CORTEX_M4				      "-mcpu=cortex-m4")
-set (MCPU_CORTEX_M7				      "-mcpu=cortex-m7")
-set (MCPU_CORTEX_M33				  "-mcpu=cortex-m33")
+set (MCPU_CORTEX_M0				            "-mcpu=cortex-m0")
+set (MCPU_CORTEX_M0PLUS				        "-mcpu=cortex-m0plus")
+set (MCPU_CORTEX_M3				            "-mcpu=cortex-m3")
+set (MCPU_CORTEX_M4				            "-mcpu=cortex-m4")
+set (MCPU_CORTEX_M7				            "-mcpu=cortex-m7")
+set (MCPU_CORTEX_M33				          "-mcpu=cortex-m33")
 set (MFPU_FPV4_SP_D16                 "-mfpu=fpv4-sp-d16")
 set (MFPU_FPV5_D16                    "-mfpu=fpv5-d16")
 set (RUNTIME_LIBRARY_REDUCED_C        "--specs=nano.specs")
@@ -35,52 +35,132 @@ set (MFLOAT_ABI_MIX                   "-mfloat-abi=softfp")
 ###################### VARIABLES ######################################
 set (PROJECT_NAME             "zxkeyboard")
 set (PROJECT_TYPE             "exe")
-set (LINKER_SCRIPT            "../STM32F105RCTX_FLASH.ld")
+#set (LINKER_SCRIPT            "../STM32F105RCTX_FLASH.ld")
 set (MCPU                     "-mcpu=Cortex-M3")
-set (MFLOAT_ABI               "")
+set (MFLOAT_ABI               ${MFLOAT_ABI_SOFTWARE})
 set (RUNTIME_LIBRARY          "--specs=nano.specs")
 set (RUNTIME_LIBRARY_SYSCALLS "--specs=nosys.specs")
 
+set(JLINKEXE "/opt/SEGGER/JLink/JLinkExe")
+set(ST-UTILS "/usr/bin/st-flash")
 
-set (PROJECT_SOURCES
-	)
+option(BOARD_NUCLEO "type of board" ON)
+option(MCU_TYPE "MCU type F105R8, F105RB, F105RC, F107RB, F107RC. F105R8 by default" "F105R8")
 
-set (PROJECT_DEFINES
-	# LIST COMPILER DEFINITIONS HERE
+set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/linker/STM32${MCU_TYPE}Tx_FLASH.ld)
 
-    )
+if (${MCU_TYPE} STREQUAL "F105R8" OR ${MCU_TYPE} STREQUAL "F105RB" OR ${MCU_TYPE} STREQUAL "F105RC")
+  set(STARTUP_SCRIPT ${CMAKE_SOURCE_DIR}/startup/startup_stm32f105xc.s)
+  set(MCU_MODEL STM32F105xC)
+elseif (${MCU_TYPE} STREQUAL "F107RB" OR ${MCU_TYPE} STREQUAL "F107RC")
+  set(STARTUP_SCRIPT ${CMAKE_SOURCE_DIR}/startup/startup_stm32f107xc.s)
+  set(MCU_MODEL STM32F107xC)
+else()
+    message(FATAL_ERROR "usupported MCU " ${MCU_TYPE})
+endif()
+message("MCU_TYPE " ${MCU_TYPE})
+message("LINKER_SCRIPT " ${LINKER_SCRIPT})
+message("MCU_MODEL " ${MCU_MODEL})
+message("STARTUP_SCRIPT " ${STARTUP_SCRIPT})
 
-set (PROJECT_INCLUDES
-    ./Core/Inc
-    ./Drivers/CMSIS/Device/ST/STM32F1xx/Include
-    ./Drivers/CMSIS/Include
-    ./Drivers/STM32F1xx_HAL_Driver/Inc
-    ./Drivers/STM32F1xx_HAL_Driver/Inc/Legacy
-    ./Middlewares/ST/STM32_USB_Host_Library/Class/HID/Inc
-    ./Middlewares/ST/STM32_USB_Host_Library/Core/Inc
-    ./project
+set(PROJECT_INCLUDES
+    ${CMAKE_SOURCE_DIR}/Core/Inc
+    ${CMAKE_SOURCE_DIR}/Drivers/CMSIS/Device/ST/STM32F1xx/Include
+    ${CMAKE_SOURCE_DIR}/Drivers/CMSIS/Include
+    ${CMAKE_SOURCE_DIR}/Drivers/STM32F1xx_HAL_Driver/Inc
+    ${CMAKE_SOURCE_DIR}/Drivers/STM32F1xx_HAL_Driver/Inc/Legacy
+    ${CMAKE_SOURCE_DIR}/Middlewares/ST/STM32_USB_Host_Library/Class/HID/Inc
+    ${CMAKE_SOURCE_DIR}/Middlewares/ST/STM32_USB_Host_Library/Core/Inc
+    ${CMAKE_SOURCE_DIR}/project
 )
+
+file(GLOB_RECURSE STM32CUBEMX_SOURCES CONFIGURE_DEPENDS
+  ${CMAKE_SOURCE_DIR}/Core/Src/*.c
+  ${CMAKE_SOURCE_DIR}/Drivers/STM32F1xx_HAL_Driver/Src/*.c
+  ${CMAKE_SOURCE_DIR}/Middlewares/ST/STM32_USB_Host_Library/Class/HID/Src/*.c
+  ${CMAKE_SOURCE_DIR}/Middlewares/ST/STM32_USB_Host_Library/Core/Src/*.c
+)
+
+file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS
+    ${CMAKE_SOURCE_DIR}/project/*.c
+    ${CMAKE_SOURCE_DIR}/project/*.cpp
+)
+
+#set(PROJECT_SOURCES ${STM32CUBEMX_SOURCES} ${PROJECT_SOURCES})
+
+#set(PROJECT_DEFINES
+#    $<$<CONFIG:Debug>:DEBUG>
+#    $<$<BOOL:${BOARD_NUCLEO}>:NUCLEO>
+#    ${MCU_MODEL}
+#    USE_HAL_DRIVER
+#)
 
 ############ MODIFY ACCORDING TO REQUIREMENTS) ########################
 
 #######################################################################
 
+
+
 ################## PROJECT SETUP ######################################
+
+#include_directories(${PROJECT_INCLUDES})
+
+set(CMAKE_EXECUTABLE_SUFFIX ".elf")
+set(CMAKE_STATIC_LIBRARY_SUFFIX ".a")
+set(CMAKE_C_FLAGS "${MCPU} -std=gnu11 ${MFPU} ${MFLOAT_ABI} ${RUNTIME_LIBRARY} -mthumb -Wall -Werror")
+set(CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS} -x assembler-with-cpp")
+
+
+#set(CMAKE_EXE_LINKER_FLAGS
+#    -T${LINKER_SCRIPT}     ${RUNTIME_LIBRARY_SYSCALLS}
+#    -Wl,-Map=${CMAKE_PROJECT_NAME}.map
+#    -Wl,--gc-sections -static
+#    -Wl,--start-group -lc -lm
+#    -Wl,--end-group
+#    -Wl,--print-memory-usage
+#)
+
+
 project(${PROJECT_NAME})
-enable_language(ASM)
+#enable_language(ASM)
+#enable_language(C)
 
-if (${PROJECT_TYPE} MATCHES ${PROJECT_TYPE_EXECUTABLE})
-  add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
-  add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_SIZE} $<TARGET_FILE:${CMAKE_PROJECT_NAME}>)
-elseif (${PROJECT_TYPE} MATCHES ${PROJECT_TYPE_STATIC_LIBRARY})
-  add_library(${PROJECT_NAME} ${PROJECT_SOURCES})
-endif()
+add_executable(${CMAKE_PROJECT_NAME} ${STARTUP_SCRIPT} ${STM32CUBEMX_SOURCES} ${PROJECT_SOURCES})
 
-add_compile_definitions (${PROJECT_DEFINES})
-include_directories (${PROJECT_INCLUDES})
+add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_SIZE} $<TARGET_FILE:${CMAKE_PROJECT_NAME}>)
 
-set (CMAKE_EXECUTABLE_SUFFIX ".elf")
-set (CMAKE_STATIC_LIBRARY_SUFFIX ".a")
-set (CMAKE_C_FLAGS "${MCPU} -std=gnu11 ${MFPU} ${MFLOAT_ABI} ${RUNTIME_LIBRARY} -mthumb -Wall -Werror")
-set (CMAKE_EXE_LINKER_FLAGS "-T${LINKER_SCRIPT} ${RUNTIME_LIBRARY_SYSCALLS} -Wl,-Map=test.map -Wl,--gc-sections -static -Wl,--start-group -lc -lm -Wl,--end-group")
-set (CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS} -x assembler-with-cpp")
+target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
+  $<$<CONFIG:Debug>:DEBUG>
+  $<$<BOOL:${BOARD_NUCLEO}>:NUCLEO>
+  ${MCU_MODEL}
+  USE_HAL_DRIVER
+)
+
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
+  ${PROJECT_INCLUDES}
+)
+
+target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE
+  $<$<CONFIG:Debug>:-O0 -g3>
+  $<$<CONFIG:Release>:-Os -g0>
+)
+
+target_link_options(${CMAKE_PROJECT_NAME} PRIVATE
+  -T${LINKER_SCRIPT}
+  ${RUNTIME_LIBRARY_SYSCALLS}
+  -Wl,-Map=${CMAKE_PROJECT_NAME}.map
+  -Wl,--gc-sections -static
+  -Wl,--start-group
+  -lc
+  -lm
+  -Wl,--end-group
+  -Wl,--print-memory-usage
+)
+
+add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_SIZE} $<TARGET_FILE:${CMAKE_PROJECT_NAME}>
+    COMMAND ${CMAKE_OBJCOPY} -O ihex $<TARGET_FILE:${CMAKE_PROJECT_NAME}> ${CMAKE_PROJECT_NAME}.hex
+    COMMAND ${CMAKE_OBJCOPY} -O binary $<TARGET_FILE:${CMAKE_PROJECT_NAME}> ${CMAKE_PROJECT_NAME}.bin
+)
+
+

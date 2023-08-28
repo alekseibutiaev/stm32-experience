@@ -9,7 +9,7 @@
   "cmake.configureArgs1": [
     "-DCMAKE_TOOLCHAIN_FILE=tools_descriptor.cmake",
     "-DBOARD_NUCLEO=ON",
-    "-DMCU=F105RB",
+    "-DMCU_TYPE=F105RB",
     "-DDUMP_ASM=OFF"
   ],
   "cmake.buildToolArgs": [
