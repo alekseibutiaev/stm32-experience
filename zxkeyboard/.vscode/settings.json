@@ -1,6 +1,7 @@
 {
-  "cortex-debug.gdbPath": "/opt/gcc-arm-none-eabi/bin/arm-none-eabi-gdb",
-  "cortex-debug.gdbPath_": "/usr/bin/gdb-multiarch",
+  "0.cortex-debug.gdbPath": "/opt/gcc-arm-none-eabi/bin/arm-none-eabi-gdb",
+  "cortex-debug.gdbPath": "/opt/arm-none-eabi-stm32/bin/arm-none-eabi-gdb",
+  "1.cortex-debug.gdbPath": "/usr/bin/gdb-multiarch",
   "cortex-debug.JLinkGDBServerPath": "/opt/SEGGER/JLink/JLinkGDBServer",
   "cortex-debug.stutilPath": "/usr/bin/st-util",
   "cmake.setBuildTypeOnMultiConfig": false,

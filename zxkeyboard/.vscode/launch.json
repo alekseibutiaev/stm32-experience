@@ -3,7 +3,7 @@
     {
       "name": "J-link Lounch Keyboard",
       "cwd": "${workspaceRoot}",
-      "executable": "${workspaceRoot}/build_Debug/keyboard.elf",
+      "executable": "${workspaceRoot}/build_Debug/zxkeyboard.elf",
       "request": "launch",
       "type": "cortex-arm-learning",
       "device": "STM32F105RC",
@@ -14,7 +14,7 @@
     {
       "name": "J-link Attach Keyboard",
       "cwd": "${workspaceRoot}",
-      "executable": "${workspaceRoot}/build_Debug/keyboard.elf",
+      "executable": "${workspaceRoot}/build_Debug/zxkeyboard.elf",
       "request": "attach",
       "type": "cortex-arm-learning",
       "device": "STM32F105RC",
@@ -24,20 +24,19 @@
     {
       "name": "st-link Lounch Keyboard",
       "cwd": "${workspaceRoot}",
-      "executable": "${workspaceRoot}/build_Debug/keyboard.elf",
+      "executable": "${workspaceRoot}/build_Debug/zxkeyboard.elf",
       "request": "launch",
       "type": "cortex-arm-learning",
       "servertype": "stutil",
       "interface": "swd",
-      "runToMain": false,
+      "runToMain": true,
       "device": "STM32F107RC",
-      "preLaunchTask": "CMake Build test",
       "swoConfig": {}
     },
     {
       "name": "st-link Attach Keyboard",
       "cwd": "${workspaceRoot}",
-      "executable": "${workspaceRoot}/build_Debug/keyboard.elf",
+      "executable": "${workspaceRoot}/build_Debug/zxkeyboard.elf",
       "request": "attach",
       "type": "cortex-arm-learning",
       "servertype": "stutil",
