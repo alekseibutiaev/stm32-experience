@@ -4,6 +4,7 @@
 #include "usb_host.h"
 #include "usart.h"
 
+#include "version.h"
 #include "usbh_hid.h"
 #include "uart_dbg.h"
 #include "custom_usbh_hid_keyboard.h"
@@ -14,7 +15,7 @@
 
 void init() {
   uart_dbg_init(&huart2);
-  printf("all initialized\n");
+  printf("USB keyboard to 8x8 matrix keyboard.\nVersion: "VERSION"\n");
   set_keys_callback(&prepare_keys);
   clear();
 }

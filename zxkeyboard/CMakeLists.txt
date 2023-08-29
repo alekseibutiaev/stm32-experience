@@ -44,6 +44,10 @@ set(CMAKE_CXX_FLAGS "")
 set(JLINKEXE "/opt/SEGGER/JLink/JLinkExe")
 set(ST-UTILS "/usr/bin/st-flash")
 
+find_package(Git)
+
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules/")
+
 option(BOARD_NUCLEO "type of board" ON)
 option(MCU_TYPE "MCU type F105R8, F105RB, F105RC, F107RB, F107RC. F105R8 by default" "F105R8")
 option(DUMP_ASM "Create full assembly of final executable" OFF)
@@ -60,11 +64,11 @@ else()
     message(FATAL_ERROR "usupported MCU " ${MCU_TYPE})
 endif()
 
-message("MCU_TYPE " ${MCU_TYPE})
-message("LINKER_SCRIPT " ${LINKER_SCRIPT})
-message("MCU_MODEL " ${MCU_MODEL})
-message("STARTUP_SCRIPT " ${STARTUP_SCRIPT})
-message("DUMP_ASM " ${DUMP_ASM})
+message("MCU_TYPE: " ${MCU_TYPE})
+message("LINKER_SCRIPT: " ${LINKER_SCRIPT})
+message("MCU_MODEL: " ${MCU_MODEL})
+message("STARTUP_SCRIPT: " ${STARTUP_SCRIPT})
+message("DUMP_ASM: " ${DUMP_ASM})
 
 set(PROJECT_INCLUDES
   ${CMAKE_SOURCE_DIR}/Core/Inc
@@ -75,6 +79,7 @@ set(PROJECT_INCLUDES
   ${CMAKE_SOURCE_DIR}/Middlewares/ST/STM32_USB_Host_Library/Class/HID/Inc
   ${CMAKE_SOURCE_DIR}/Middlewares/ST/STM32_USB_Host_Library/Core/Inc
   ${CMAKE_SOURCE_DIR}/project
+  ${CMAKE_BINARY_DIR}
 )
 
 file(GLOB_RECURSE STM32CUBEMX_SOURCES CONFIGURE_DEPENDS
@@ -107,11 +112,22 @@ set(CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS} -x assembler-with-cpp")
 project(${PROJECT_NAME})
 enable_language(ASM C CXX)
 
+add_custom_target(version
+${CMAKE_COMMAND}
+  -D SRC=${CMAKE_SOURCE_DIR}/version.h.in
+  -D DST=${CMAKE_BINARY_DIR}/version.h
+  -D GIT_EXECUTABLE=${GIT_EXECUTABLE}
+  -D NAME=${PROJECT_NAME}
+  -P ${CMAKE_MODULE_PATH}GenerateVersionHeader.cmake
+)
+
 add_executable(${CMAKE_PROJECT_NAME}
   ${STM32CUBEMX_SOURCES}
   ${PROJECT_SOURCES}
   ${STARTUP_SCRIPT}
 )
+
+add_dependencies(${CMAKE_PROJECT_NAME} version)
 
 target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
   $<$<CONFIG:Debug>:DEBUG>
