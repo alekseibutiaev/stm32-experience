@@ -51,6 +51,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 option(BOARD_NUCLEO "type of board" ON)
 option(MCU_TYPE "MCU type F105R8, F105RB, F105RC, F107RB, F107RC. F105R8 by default" "F105R8")
 option(DUMP_ASM "Create full assembly of final executable" OFF)
+option(VBUS_ACTIVE_HIGH "USB VBUS active high" ON)
 
 set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/linker/STM32${MCU_TYPE}Tx_FLASH.ld)
 
@@ -131,6 +132,7 @@ add_dependencies(${CMAKE_PROJECT_NAME} version)
 
 target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
   $<$<CONFIG:Debug>:DEBUG>
+  $<$<BOOL:${VBUS_ACTIVE_HIGH}>:ACTIVE_HIGH>
   $<$<BOOL:${BOARD_NUCLEO}>:NUCLEO>
   ${MCU_MODEL}
   USE_HAL_DRIVER

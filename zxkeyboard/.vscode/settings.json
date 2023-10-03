@@ -11,7 +11,8 @@
     "-DCMAKE_TOOLCHAIN_FILE=tools_descriptor.cmake",
     "-DBOARD_NUCLEO=ON",
     "-DMCU_TYPE=F105RB",
-    "-DDUMP_ASM=OFF"
+    "-DDUMP_ASM=OFF",
+    "-DVBUS_ACTIVE_HIGH=ON"
   ],
   "cmake.buildToolArgs": [
     "VERBOSE=1",
