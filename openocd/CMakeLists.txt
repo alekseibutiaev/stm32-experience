@@ -13,7 +13,7 @@
 cmake_minimum_required(VERSION 3.20)
 
 ###################### CONSTANTS ######################################
-set (PROJECT_NAME                     "zxkeyboard")
+set (PROJECT_NAME                     "openocd")
 set (PROJECT_TYPE_EXECUTABLE          "exe")
 set (PROJECT_TYPE_STATIC_LIBRARY      "static-lib")
 set (MCPU_CORTEX_M0				            "-mcpu=cortex-m0")
@@ -48,22 +48,12 @@ find_package(Git)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
-option(BOARD_NUCLEO "type of board" ON)
-option(MCU_TYPE "MCU type F105R8, F105RB, F105RC, F107RB, F107RC. F105R8 by default" "F105R8")
+set(MCU_TYPE F103ZE)
+set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/linker/STM32${MCU_TYPE}TX_FLASH.ld)
+set(STARTUP_SCRIPT ${CMAKE_SOURCE_DIR}/Core/Startup/startup_stm32f103zetx.s)
+set(MCU_MODEL STM32F103xE)
+
 option(DUMP_ASM "Create full assembly of final executable" OFF)
-option(VBUS_ACTIVE_HIGH "USB VBUS active high" ON)
-
-set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/linker/STM32${MCU_TYPE}Tx_FLASH.ld)
-
-if (${MCU_TYPE} STREQUAL "F105R8" OR ${MCU_TYPE} STREQUAL "F105RB" OR ${MCU_TYPE} STREQUAL "F105RC")
-  set(STARTUP_SCRIPT ${CMAKE_SOURCE_DIR}/startup/startup_stm32f105xc.s)
-  set(MCU_MODEL STM32F105xC)
-elseif (${MCU_TYPE} STREQUAL "F107RB" OR ${MCU_TYPE} STREQUAL "F107RC")
-  set(STARTUP_SCRIPT ${CMAKE_SOURCE_DIR}/startup/startup_stm32f107xc.s)
-  set(MCU_MODEL STM32F107xC)
-else()
-    message(FATAL_ERROR "usupported MCU " ${MCU_TYPE})
-endif()
 
 message("MCU_TYPE: " ${MCU_TYPE})
 message("LINKER_SCRIPT: " ${LINKER_SCRIPT})
@@ -77,8 +67,6 @@ set(PROJECT_INCLUDES
   ${CMAKE_SOURCE_DIR}/Drivers/CMSIS/Include
   ${CMAKE_SOURCE_DIR}/Drivers/STM32F1xx_HAL_Driver/Inc
   ${CMAKE_SOURCE_DIR}/Drivers/STM32F1xx_HAL_Driver/Inc/Legacy
-  ${CMAKE_SOURCE_DIR}/Middlewares/ST/STM32_USB_Host_Library/Class/HID/Inc
-  ${CMAKE_SOURCE_DIR}/Middlewares/ST/STM32_USB_Host_Library/Core/Inc
   ${CMAKE_SOURCE_DIR}/project
   ${CMAKE_BINARY_DIR}
 )
@@ -86,8 +74,6 @@ set(PROJECT_INCLUDES
 file(GLOB_RECURSE STM32CUBEMX_SOURCES CONFIGURE_DEPENDS
   ${CMAKE_SOURCE_DIR}/Core/Src/*.c
   ${CMAKE_SOURCE_DIR}/Drivers/STM32F1xx_HAL_Driver/Src/*.c
-  ${CMAKE_SOURCE_DIR}/Middlewares/ST/STM32_USB_Host_Library/Class/HID/Src/*.c
-  ${CMAKE_SOURCE_DIR}/Middlewares/ST/STM32_USB_Host_Library/Core/Src/*.c
 )
 
 file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS

@@ -1,0 +1,26 @@
+{
+  "buildType": {
+    "default": "Debug OpenOCD",
+    "description": "build variants",
+    "choices": {
+      "Debug OpenOCD": {
+        "short": "Debug OpenOCD",
+        "buildType": "Debug",
+        "settings" : {
+          "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
+          "CMAKE_VERBOSE_MAKEFILE" : "ON",
+          "DUMP_ASM": "OFF"
+        } 
+      },
+      "Release OpenOCD": {
+        "short": "Release OpenOCD",
+        "buildType": "Release",
+        "settings" : {
+          "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
+          "CMAKE_VERBOSE_MAKEFILE" : "ON",
+          "DUMP_ASM": "OFF"
+        } 
+      },
+    }
+  }
+}
