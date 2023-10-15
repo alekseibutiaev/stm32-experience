@@ -167,21 +167,26 @@ if (${DUMP_ASM})
 endif()
 
 add_custom_command(OUTPUT jlink_cmd_script
-    COMMAND echo "device ${DEVICE}" >> jlink_cmd_script
-    COMMAND echo "if swd" >> jlink_cmd_script
-    COMMAND echo "Speed 4000" >> jlink_cmd_script
-    COMMAND echo "LoadFile ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.bin 0x08000000" >> jlink_cmd_script
-    COMMAND echo "Exit" >> jlink_cmd_script
-    VERBATIM
+  COMMAND echo "device ${DEVICE}" >> jlink_cmd_script
+  COMMAND echo "if swd" >> jlink_cmd_script
+  COMMAND echo "Speed 4000" >> jlink_cmd_script
+  COMMAND echo "LoadFile ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.bin 0x08000000" >> jlink_cmd_script
+  COMMAND echo "Exit" >> jlink_cmd_script
+  VERBATIM
 )
 
 add_custom_target(jlink_upload DEPENDS ${CMAKE_PROJECT_NAME} jlink_cmd_script
-    COMMAND cat jlink_cmd_script
-    COMMAND ${JLINKEXE} -CommanderScript jlink_cmd_script
+  COMMAND cat jlink_cmd_script
+  COMMAND ${JLINKEXE} -CommanderScript jlink_cmd_script
 )
 
 add_custom_target(stlink_upload DEPENDS ${CMAKE_PROJECT_NAME}
-    COMMAND echo "run ${ST-UTILS} write ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.bin 0x08000000"
-    COMMAND ${ST-UTILS} write ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.bin 0x08000000
+  COMMAND echo "run ${ST-UTILS} write ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.bin 0x08000000"
+  COMMAND ${ST-UTILS} write ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.bin 0x08000000
 )
 
+add_custom_target(openocd_upload DEPENDS ${CMAKE_PROJECT_NAME}
+  COMMAND echo "run: openocd -f ${CMAKE_SOURCE_DIR}/${CMAKE_PROJECT_NAME}.cfg -c \"init; reset halt; flash write_image erase ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.bin 0x08000000; reset; shutdown\""
+  COMMAND openocd -f ${CMAKE_SOURCE_DIR}/${CMAKE_PROJECT_NAME}.cfg
+    -c \"init\; reset halt\; flash write_image erase ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.bin 0x08000000\; reset\; shutdown \"
+)

@@ -8,7 +8,7 @@ void test() {
   static union {
     struct {
       int a : 1;
-      int   : 3;
+      int   : 6;
       int b : 1;
     } bit;
     unsigned char value;
