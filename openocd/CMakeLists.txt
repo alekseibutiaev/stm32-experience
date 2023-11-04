@@ -95,7 +95,6 @@ set(CMAKE_STATIC_LIBRARY_SUFFIX ".a")
 set(CMAKE_C_FLAGS "${MCPU} -std=gnu11 ${MFPU} ${MFLOAT_ABI} ${RUNTIME_LIBRARY} -mthumb -Wall -Werror")
 set(CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS} -x assembler-with-cpp")
 
-
 project(${PROJECT_NAME})
 enable_language(ASM C CXX)
 

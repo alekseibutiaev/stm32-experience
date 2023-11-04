@@ -96,6 +96,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  unsigned int i = 0;
   printf("out number %d\n", 123);
   while (1)
   {
@@ -103,6 +104,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    printf("out number %d\n", i++);
     test();
   }
   /* USER CODE END 3 */
