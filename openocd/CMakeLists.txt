@@ -34,10 +34,10 @@ set (MFLOAT_ABI_MIX                   "-mfloat-abi=softfp")
 #######################################################################
 
 ###################### VARIABLES ######################################
-set(MCPU                     "-mcpu=Cortex-M3")
+set(MCPU                     ${MCPU_CORTEX_M3})
 set(MFLOAT_ABI               ${MFLOAT_ABI_SOFTWARE})
-set(RUNTIME_LIBRARY          "--specs=nano.specs")
-set(RUNTIME_LIBRARY_SYSCALLS "--specs=nosys.specs")
+set(RUNTIME_LIBRARY          ${RUNTIME_LIBRARY_REDUCED_C})
+set(RUNTIME_LIBRARY_SYSCALLS ${RUNTIME_LIBRARY_SYSCALLS_MINIMAL})
 set(CMAKE_C_FLAGS "")
 set(CMAKE_CXX_FLAGS "")
 
@@ -93,7 +93,7 @@ file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS
 set(CMAKE_EXECUTABLE_SUFFIX ".elf")
 set(CMAKE_STATIC_LIBRARY_SUFFIX ".a")
 set(CMAKE_C_FLAGS "${MCPU} -std=gnu11 ${MFPU} ${MFLOAT_ABI} ${RUNTIME_LIBRARY} -mthumb -Wall -Werror")
-set(CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS} -x assembler-with-cpp")
+set(CMAKE_ASM_FLAGS "${MCPU} -x assembler-with-cpp $")
 
 project(${PROJECT_NAME})
 enable_language(ASM C CXX)
@@ -146,7 +146,9 @@ target_link_options(${CMAKE_PROJECT_NAME} PRIVATE
   -T${LINKER_SCRIPT}
   ${RUNTIME_LIBRARY_SYSCALLS}
   -Wl,-Map=${CMAKE_PROJECT_NAME}.map
-  -Wl,--gc-sections -static
+  -Wl,--gc-sections
+  -static
+  ${MFLOAT_ABI}
   -Wl,--start-group
   -lc
   -lm
@@ -161,7 +163,7 @@ add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
 )
 
 if (${DUMP_ASM})
-  add_custom_command(TARGET ${EXECUTABLE} POST_BUILD
+  add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_OBJDUMP} -D $<TARGET_FILE:${CMAKE_PROJECT_NAME}> > ${CMAKE_PROJECT_NAME}.s)
 endif()
 

@@ -28,9 +28,6 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-#define DEMCR                 *((volatile uint32_t*) 0xE000EDFCu)
-#define ITM_STIMULUS_PORT0    *((volatile uint32_t*) 0xE0000000u)
-#define ITM_TRACE_EN          *((volatile uint32_t*) 0xE0000E00u)
 
 /* USER CODE END PTD */
 
@@ -59,20 +56,21 @@ void SystemClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 int __io_putchar(int ch) {
-  // Write character to ITM ch.0
-  ITM_SendChar(ch);
-  return(ch);
+	return ITM_SendChar(ch);
 }
 /* USER CODE END 0 */
-void test_func() {}
+
 /**
   * @brief  The application entry point.
   * @retval int
   */
 int main(void)
 {
-  /* USER CODE BEGIN 1 */
 
+  /* USER CODE BEGIN 1 */
+	CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
+	//    ITM->TCR |= ITM_TCR_ITMENA_Msk;
+	ITM->TER |= 1U;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -92,54 +90,23 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
- // MX_GPIO_Init();
+  MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
 
-test_func();
-#if 0
-  volatile CoreDebug_Type* cd = CoreDebug;
-  uint32_t a = cd->DEMCR;
-  cd->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
-  uint32_t b = cd->DEMCR;
-  volatile ITM_Type* itm = ITM;
-  itm->TER |= ITM_TCR_ITMENA_Msk;
-  itm->TCR |= ITM_TCR_ITMENA_Msk;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  
-  uint32_t tcr = itm->TCR;
-  uint32_t ter = itm->TER;
-  (void)a;
-  (void)b;
-  (void)tcr;
-  (void)ter;
-#else
-/*
-  uint32_t* ddd = (uint32_t*)0xE000EDFCUL;
-  *ddd |= 1U << 24;
-  uint32_t* sss = (uint32_t*)0xE0000E00UL;
-  *sss |= 1;
-*/
-// Enable TRCENA
-DEMCR |= ( 1 << 24);
-// Enable stimulus port 0
-ITM_TRACE_EN |= ( 1 << 0);
-
-#endif
-test_func();
-  unsigned int i = 0;
-  printf("out number %d\n", 123);
-
+  init();
+  int a = 0;
   while (1)
   {
-//    HAL_Delay(1000);
+	printf("Test Message %d\n", a++);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    printf("out number %d\n", i++);
- //   test();
+	  process();
+	  HAL_Delay(100);
   }
   /* USER CODE END 3 */
 }
