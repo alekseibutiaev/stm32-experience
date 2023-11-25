@@ -29,12 +29,6 @@
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 
-#if 0
-#define DEMCR                 *((volatile uint32_t*) 0xE000EDFCu)
-#define ITM_STIMULUS_PORT0    *((volatile uint32_t*) 0xE0000000u)
-#define ITM_TRACE_EN          *((volatile uint32_t*) 0xE0000E00u)
-#endif
-
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -62,18 +56,16 @@ void SystemClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 int __io_putchar(int ch) {
-  // Write character to ITM ch.0
-  ITM_SendChar(ch);
-  return(ch);
+	return ITM_SendChar(ch);
 }
 /* USER CODE END 0 */
-void test_func() {}
+
 /**
   * @brief  The application entry point.
   * @retval int
   */
-int main(void)
-{
+int main(void) {
+
   /* USER CODE BEGIN 1 */
 	CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
 	//    ITM->TCR |= ITM_TCR_ITMENA_Msk;
@@ -97,20 +89,22 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
- // MX_GPIO_Init();
+  MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
 
-  unsigned int i = 0;
-  printf("out number %d\n", 123);
+  /* USER CODE END 2 */
 
-  while (1)
-  {
-  //    HAL_Delay(1000);
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
+  init();
+  int a = 0;
+  for(;;) {
+	  printf("Test Message %d\n", a++);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    printf("out number %d\n", i++);
-   //   test();
+	  process();
+	  HAL_Delay(100);
   }
   /* USER CODE END 3 */
 }

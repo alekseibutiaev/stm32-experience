@@ -2,25 +2,17 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "CMake Build test !!!!!!!",
-      "command": "${command:cmake.build}",
-      "type": "shell",
+      "label": "rebuild install",
+      "type": "cmake",
+      "command": "build",
+      "targets": [
+        "all",
+        "openocd_upload"
+      ],
+      "problemMatcher": [],
       "group": {
         "kind": "build",
         "isDefault": true
-      }
-    },
-    {
-      "label": "MY Task",
-      "command": "pwd",
-      "type": "shell"
-    },
-    {
-      "label": "st-link upload",
-      "command": "make",
-      "args": ["stlink_upload"],
-      "problemMatcher": {
-        "fileLocation": ["relative","${workspaceRoot/build_Release"]
       }
     }
   ]

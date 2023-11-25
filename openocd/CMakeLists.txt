@@ -99,12 +99,12 @@ project(${PROJECT_NAME})
 enable_language(ASM C CXX)
 
 add_custom_target(version
-${CMAKE_COMMAND}
-  -D SRC=${CMAKE_SOURCE_DIR}/version.h.in
-  -D DST=${CMAKE_BINARY_DIR}/version.h
-  -D GIT_EXECUTABLE=${GIT_EXECUTABLE}
-  -D NAME=${PROJECT_NAME}
-  -P ${CMAKE_MODULE_PATH}GenerateVersionHeader.cmake
+  ${CMAKE_COMMAND}
+    -D SRC=${CMAKE_SOURCE_DIR}/version.h.in
+    -D DST=${CMAKE_BINARY_DIR}/version.h
+    -D GIT_EXECUTABLE=${GIT_EXECUTABLE}
+    -D NAME=${PROJECT_NAME}
+    -P ${CMAKE_MODULE_PATH}GenerateVersionHeader.cmake
 )
 
 add_executable(${CMAKE_PROJECT_NAME}
@@ -186,8 +186,13 @@ add_custom_target(stlink_upload DEPENDS ${CMAKE_PROJECT_NAME}
   COMMAND ${ST-UTILS} write ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.bin 0x08000000
 )
 
-add_custom_target(openocd_upload DEPENDS ${CMAKE_PROJECT_NAME}
+add_custom_command(
+  OUTPUT ocd_upload
+  DEPENDS ${CMAKE_PROJECT_NAME}
+  COMMAND touch ocd_upload
   COMMAND echo "run: openocd -f ${CMAKE_SOURCE_DIR}/${CMAKE_PROJECT_NAME}.cfg -c \"init; reset halt; flash write_image erase ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.bin 0x08000000; reset; shutdown\""
   COMMAND openocd -f ${CMAKE_SOURCE_DIR}/${CMAKE_PROJECT_NAME}.cfg
     -c \"init\; reset halt\; flash write_image erase ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.bin 0x08000000\; reset\; shutdown \"
 )
+
+add_custom_target(openocd_upload DEPENDS ocd_upload )
