@@ -98,6 +98,7 @@ int main(void) {
   /* USER CODE BEGIN WHILE */
   init();
   int a = 0;
+  int* ap = &a;
   for(;;) {
 	  printf("Test Message %d\n", a++);
     /* USER CODE END WHILE */
@@ -106,6 +107,7 @@ int main(void) {
 	  process();
 	  HAL_Delay(100);
   }
+  (void)ap;
   /* USER CODE END 3 */
 }
 

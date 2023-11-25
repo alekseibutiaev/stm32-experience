@@ -31,4 +31,5 @@
   "cortex-debug.JLinkGDBServerPath.linux": "/opt/SEGGER/JLink/JLinkGDBServer",
   "cortex-debug.liveWatchRefreshRate": 5000,
   "cortex-debug.armToolchainPath.linux": "/opt/arm-none-eabi-stm32/bin/arm-none-eabi-gdb/bin",
+  "memory-view.showMemoryPanel": true,
 }

@@ -73,7 +73,7 @@
       "servertype": "openocd",
       "device": "STM32F103ZE",
       "runToMain": true,
-      "configFiles": [
+      "x-configFiles": [
           "interface/stlink.cfg",
           "target/stm32f1x.cfg"
       ],
