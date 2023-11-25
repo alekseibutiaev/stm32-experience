@@ -2,7 +2,7 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "rebuild install",
+      "label": "rebuild_flash",
       "type": "cmake",
       "command": "build",
       "targets": [

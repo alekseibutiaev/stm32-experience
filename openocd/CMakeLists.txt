@@ -195,4 +195,4 @@ add_custom_command(
     -c \"init\; reset halt\; flash write_image erase ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.bin 0x08000000\; reset\; shutdown \"
 )
 
-add_custom_target(openocd_upload DEPENDS ocd_upload )
+add_custom_target(rebuild_flash DEPENDS ocd_upload)
