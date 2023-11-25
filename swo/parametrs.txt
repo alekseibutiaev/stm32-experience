@@ -1,0 +1,9 @@
+/home/st/STM32CubeIDE_1.13.2/plugins/com.st.stm32cube.ide.mcu.externaltools.openocd.linux64_2.3.0.202305091550/tools/bin/openocd
+"-f" "swo openocd.cfg"
+"-s" "/home/butiaev/project/stm32-experience/swo"
+"-s" "/home/st/STM32CubeIDE_1.13.2/plugins/com.st.stm32cube.ide.mcu.debug.openocd_2.1.0.202306221132/resources/openocd/st_scripts"
+"-s" "/home/st/STM32CubeIDE_1.13.2/plugins/com.st.stm32cube.ide.mpu.debug.openocd_2.1.0.202305092038/resources/openocd/st_scripts"
+"-c" "gdb_report_data_abort enable"
+"-c" "gdb_port 3333"
+"-c" "tcl_port 6666"
+"-c" "telnet_port 4444"
