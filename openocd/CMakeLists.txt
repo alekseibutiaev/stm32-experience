@@ -196,3 +196,4 @@ add_custom_command(
 )
 
 add_custom_target(rebuild_flash DEPENDS ocd_upload)
+
