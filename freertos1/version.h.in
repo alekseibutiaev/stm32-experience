@@ -1,5 +1,5 @@
 #pragma once
 #ifndef __VERSION_H__
 #define __VERSION_H__
-#define VERSION "@zxkeyboard_VERSION@"
+#define VERSION "@freertos_VERSION@"
 #endif /* __VERSION_H__ */
