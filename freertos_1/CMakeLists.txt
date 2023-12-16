@@ -13,7 +13,7 @@
 cmake_minimum_required(VERSION 3.20)
 
 ###################### CONSTANTS ######################################
-set (PROJECT_NAME                     "openocd")
+set (PROJECT_NAME                     "freertos1")
 set (PROJECT_TYPE_EXECUTABLE          "exe")
 set (PROJECT_TYPE_STATIC_LIBRARY      "static-lib")
 set (MCPU_CORTEX_M0				            "-mcpu=cortex-m0")
@@ -50,7 +50,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
 set(MCU_TYPE F103ZE)
 set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32${MCU_TYPE}TX_FLASH.ld)
-set(STARTUP_SCRIPT ${CMAKE_SOURCE_DIR}/Core/Startup/startup_stm32f103zetx.s)
+set(STARTUP_SCRIPT ${CMAKE_SOURCE_DIR}/Core/Startup/startup_stm32f103xe.s)
 set(MCU_MODEL STM32F103xE)
 
 option(DUMP_ASM "Create full assembly of final executable" OFF)
