@@ -68,6 +68,7 @@ set(PROJECT_INCLUDES
   ${CMAKE_SOURCE_DIR}/Drivers/CMSIS/Include
   ${CMAKE_SOURCE_DIR}/Drivers/STM32F1xx_HAL_Driver/Inc
   ${CMAKE_SOURCE_DIR}/Drivers/STM32F1xx_HAL_Driver/Inc/Legacy
+  ${CMAKE_SOURCE_DIR}/freertos/include
   ${CMAKE_SOURCE_DIR}/project
   ${CMAKE_BINARY_DIR}
 )
@@ -75,6 +76,8 @@ set(PROJECT_INCLUDES
 file(GLOB_RECURSE STM32CUBEMX_SOURCES CONFIGURE_DEPENDS
   ${CMAKE_SOURCE_DIR}/Core/Src/*.c
   ${CMAKE_SOURCE_DIR}/Drivers/STM32F1xx_HAL_Driver/Src/*.c
+  ${CMAKE_SOURCE_DIR}/freertos/src/*.c
+  ${CMAKE_SOURCE_DIR}/freertos/portable/*.c
 )
 
 file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS
