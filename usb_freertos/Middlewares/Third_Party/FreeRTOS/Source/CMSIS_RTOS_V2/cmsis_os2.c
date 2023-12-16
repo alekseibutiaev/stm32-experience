@@ -1617,6 +1617,7 @@ osStatus_t osMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr, uin
         portYIELD_FROM_ISR (yield);
       }
     }
+    inspectQueue(hQueue, 'w', 'i');
   }
   else {
     if ((hQueue == NULL) || (msg_ptr == NULL)) {
@@ -1631,8 +1632,8 @@ osStatus_t osMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr, uin
         }
       }
     }
+    inspectQueue(hQueue, 'w', 'n');
   }
-
   return (stat);
 }
 
@@ -1646,6 +1647,7 @@ osStatus_t osMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8_t *
   stat = osOK;
 
   if (IS_IRQ()) {
+    inspectQueue(hQueue, 'r', 'i');
     if ((hQueue == NULL) || (msg_ptr == NULL) || (timeout != 0U)) {
       stat = osErrorParameter;
     }
@@ -1660,6 +1662,7 @@ osStatus_t osMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8_t *
     }
   }
   else {
+    inspectQueue(hQueue, 'r', 'n');
     if ((hQueue == NULL) || (msg_ptr == NULL)) {
       stat = osErrorParameter;
     }

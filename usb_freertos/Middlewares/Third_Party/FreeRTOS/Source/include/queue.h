@@ -1645,6 +1645,8 @@ UBaseType_t uxQueueGetQueueNumber( QueueHandle_t xQueue ) PRIVILEGED_FUNCTION;
 uint8_t ucQueueGetQueueType( QueueHandle_t xQueue ) PRIVILEGED_FUNCTION;
 
 
+void* inspectQueue(QueueHandle_t xQueue, const char rw, const char isr);
+
 #ifdef __cplusplus
 }
 #endif

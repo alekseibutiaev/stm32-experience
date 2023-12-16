@@ -244,6 +244,21 @@ static void prvInitialiseNewQueue( const UBaseType_t uxQueueLength, const UBaseT
 	taskEXIT_CRITICAL()
 /*-----------------------------------------------------------*/
 
+void* inspectQueue(QueueHandle_t xQueue, const char rw, const char isr) {
+
+  Queue_t* const pxQueue = (Queue_t*)xQueue;
+  static int rc = 0;
+  static int wc = 0;
+  (void)isr;
+  if('r' == rw)
+	  ++rc;
+  else
+	  ++wc;
+  if(pxQueue->uxItemSize != 4)
+	return 0;
+  return pxQueue;
+}
+
 BaseType_t xQueueGenericReset( QueueHandle_t xQueue, BaseType_t xNewQueue )
 {
 Queue_t * const pxQueue = ( Queue_t * ) xQueue;
@@ -2117,7 +2132,7 @@ UBaseType_t uxMessagesWaiting;
 
 static void prvCopyDataFromQueue( Queue_t * const pxQueue, void * const pvBuffer )
 {
-	if( pxQueue->uxItemSize != ( UBaseType_t ) 0 )
+
 	{
 		pxQueue->u.pcReadFrom += pxQueue->uxItemSize;
 		if( pxQueue->u.pcReadFrom >= pxQueue->pcTail ) /*lint !e946 MISRA exception justified as use of the relational operator is the cleanest solutions. */

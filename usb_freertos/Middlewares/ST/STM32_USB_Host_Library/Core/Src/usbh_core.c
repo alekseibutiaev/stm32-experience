@@ -1144,8 +1144,8 @@ static void USBH_Process_OS(void *argument)
 
   for (;;)
   {
-    status = osMessageQueueGet(((USBH_HandleTypeDef *)argument)->os_event,
-                               &((USBH_HandleTypeDef *)argument)->os_msg, NULL, osWaitForever);
+	  USBH_HandleTypeDef* ht = (USBH_HandleTypeDef*)argument;
+    status = osMessageQueueGet(ht->os_event, &ht->os_msg, NULL, osWaitForever);
     if (status == osOK)
     {
       USBH_Process((USBH_HandleTypeDef *)argument);
