@@ -5,7 +5,7 @@
       "type": "cppdbg",
       "request": "launch",
       "cwd" : "${workspaceRoot}",
-      "program": "${workspaceFolder}/build_Debug/openocd.elf",
+      "program": "${workspaceFolder}/build_Debug/freertos1.elf",
       "args": [],
       "stopAtEntry": true,
       "environment": [],
@@ -35,7 +35,7 @@
             "ignoreFailures": false
           },
           {
-            "text": "-file-exec-and-symbols ${workspaceFolder}/build_Debug/openocd.elf",
+            "text": "-file-exec-and-symbols ${workspaceFolder}/build_Debug/freertos1.elf",
             "description": "load file",
             "ignoreFailures": false
           },

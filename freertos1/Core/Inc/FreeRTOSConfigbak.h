@@ -401,7 +401,7 @@
   executes for the first time. Any application initialisation code that needs the RTOS to be running
   can be placed in the hook function.
 
-  void void vApplicationDaemonTaskStartupHook( void );
+  void vApplicationDaemonTaskStartupHook( void );
 */
 
 #define configUSE_DAEMON_TASK_STARTUP_HOOK 0
