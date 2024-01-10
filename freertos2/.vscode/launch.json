@@ -1,0 +1,93 @@
+{
+  "configurations": [
+    {
+      "name": "(gdb) Launch",
+      "type": "cppdbg",
+      "request": "launch",
+      "cwd" : "${workspaceRoot}",
+      "program": "${workspaceFolder}/build_Debug/freertos2.elf",
+      "args": [],
+      "stopAtEntry": true,
+      "environment": [],
+      "externalConsole": true,
+      "debugServerArgs": "-f interface/stlink-v2.cfg -f target/stm32f1x.cfg -c \"transport select hla_swd\" -c \"reset_config srst_only\" -c \"tpiu config external uart on 72000000 2000000\"",
+      "x-debugServerArgs": "-f ${workspaceFolder}/freertos1.cfg",
+      "preLaunchTask": "rebuild_flash",
+      "serverLaunchTimeout": 20000,
+      "filterStderr": true,
+      "filterStdout": false,
+      "serverStarted": "Info\\ :\\ [\\w\\d\\.]*:\\ hardware",
+      "logging": {
+          "moduleLoad": true,
+          "trace": true,
+          "engineLogging": false,
+          "programOutput": true,
+          "exceptions": true
+      },
+      "linux" : {
+        "MIMode": "gdb",
+        "miDebuggerPath": "/opt/arm-none-eabi-stm32/bin/arm-none-eabi-gdb",
+        "debugServerPath": "/usr/bin/openocd",
+        "setupCommands": [
+          {
+            "text": "-target-select remote localhost:3333",
+            "description": "connect to target",
+            "ignoreFailures": false
+          },
+          {
+            "text": "-file-exec-and-symbols ${workspaceFolder}/build_Debug/freertos2.elf",
+            "description": "load file",
+            "ignoreFailures": false
+          },
+          {
+            "text": "-interpreter-exec console \"monitor endian little\"",
+            "ignoreFailures": false
+          },
+          { "text": "-interpreter-exec console \"monitor reset\"",
+            "ignoreFailures": false
+          },
+          {
+            "text": "-interpreter-exec console \"monitor halt\"",
+            "ignoreFailures": false
+          },
+          {
+            "text": "-interpreter-exec console \"monitor arm semihosting enable\"",
+            "ignoreFailures": false
+          },
+          {
+            "text": "-target-download",
+            "description": "flash target",
+            "ignoreFailures": false
+          }
+        ]
+      }
+    },
+    {
+      "name":"Cortex Debug",
+      "preLaunchTask": "rebuild_flash", 
+      "preLaunchCommands": ["monitor arm semihosting enable"],
+      "cwd": "${workspaceRoot}",
+      "executable": "${workspaceFolder}/build_Debug/freertos2.elf",
+      "request": "launch",
+      "type": "cortex-debug",
+      "servertype": "openocd",
+      "device": "STM32F103ZE",
+      "runToMain": true,
+      "configFiles": [
+        "${workspaceFolder}/freertos1.cfg"
+      ],
+      "svdFile": "${workspaceFolder}/STM32F103.svd",
+      "interface": "swd",
+      "swoConfig": {
+        "enabled": true,
+        "source": "probe",
+        "swoFrequency": 2000000,
+        "cpuFrequency": 72000000,
+        "decoders": [
+          {"port": 0, "type": "console", "label": "SWO output", "encoding":"ascii" }
+        ]
+      }
+          
+    }
+  ]
+}

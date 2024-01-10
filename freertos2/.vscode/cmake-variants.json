@@ -1,0 +1,26 @@
+{
+  "buildType": {
+    "default": "Debug freertos",
+    "description": "build variants",
+    "choices": {
+      "Debug freertos": {
+        "short": "Debug freertos2",
+        "buildType": "Debug",
+        "settings" : {
+          "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
+          "CMAKE_VERBOSE_MAKEFILE" : "ON",
+          "DUMP_ASM": "ON"
+        } 
+      },
+      "Release freertos": {
+        "short": "Release freertos2",
+        "buildType": "Release",
+        "settings" : {
+          "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
+          "CMAKE_VERBOSE_MAKEFILE" : "ON",
+          "DUMP_ASM": "ON"
+        } 
+      }
+    }
+  }
+}
