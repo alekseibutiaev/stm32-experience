@@ -74,12 +74,12 @@
       "device": "STM32F103ZE",
       "runToMain": true,
       "configFiles": [
-        "${workspaceFolder}/freertos1.cfg"
+        "${workspaceFolder}/freertos2.cfg"
       ],
       "svdFile": "${workspaceFolder}/STM32F103.svd",
       "interface": "swd",
       "swoConfig": {
-        "enabled": true,
+        "enabled": false,
         "source": "probe",
         "swoFrequency": 2000000,
         "cpuFrequency": 72000000,

@@ -68,6 +68,7 @@ set(PROJECT_INCLUDES
   ${CMAKE_SOURCE_DIR}/Drivers/CMSIS/Include
   ${CMAKE_SOURCE_DIR}/Drivers/STM32F1xx_HAL_Driver/Inc
   ${CMAKE_SOURCE_DIR}/Drivers/STM32F1xx_HAL_Driver/Inc/Legacy
+  ${CMAKE_SOURCE_DIR}/freertos/include
   ${CMAKE_SOURCE_DIR}/project
   ${CMAKE_BINARY_DIR}
 )
@@ -116,6 +117,11 @@ add_executable(${CMAKE_PROJECT_NAME}
 
 add_dependencies(${CMAKE_PROJECT_NAME} version)
 
+target_link_libraries(${CMAKE_PROJECT_NAME}
+  freertos_kernel
+  freertos_kernel_port
+)
+
 target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
   $<$<CONFIG:Debug>:DEBUG>
   $<$<BOOL:${VBUS_ACTIVE_HIGH}>:ACTIVE_HIGH>
@@ -156,6 +162,8 @@ target_link_options(${CMAKE_PROJECT_NAME} PRIVATE
   -Wl,--end-group
   -Wl,--print-memory-usage
 )
+
+add_subdirectory(freertos)
 
 add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
   COMMAND ${CMAKE_SIZE} $<TARGET_FILE:${CMAKE_PROJECT_NAME}>

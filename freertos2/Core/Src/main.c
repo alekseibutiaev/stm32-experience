@@ -22,7 +22,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "FreeRTOS.h"
+#include "task.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -43,6 +44,13 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+/* Idle task control block and stack */
+static StaticTask_t Idle_TCB;
+static StackType_t  Idle_Stack[configMINIMAL_STACK_SIZE];
+
+/* Timer task control block and stack */
+static StaticTask_t Timer_TCB;
+static StackType_t  Timer_Stack[configTIMER_TASK_STACK_DEPTH];
 
 /* USER CODE END PV */
 
@@ -54,6 +62,37 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
+void task_one(void* param) {
+  for(;;) {
+    HAL_GPIO_TogglePin(led0_GPIO_Port, led0_Pin);
+    vTaskDelay(1000000);
+  }
+}
+
+void task_two(void* param) {
+  for(;;) {
+    HAL_GPIO_TogglePin(led1_GPIO_Port, led1_Pin);
+    vTaskDelay(500000);
+  }
+}
+
+void vApplicationGetIdleTaskMemory (StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize) {
+  *ppxIdleTaskTCBBuffer   = &Idle_TCB;
+  *ppxIdleTaskStackBuffer = &Idle_Stack[0];
+  *pulIdleTaskStackSize   = (uint32_t)configMINIMAL_STACK_SIZE;
+}
+
+/*
+  vApplicationGetTimerTaskMemory gets called when configSUPPORT_STATIC_ALLOCATION
+  equals to 1 and is required for static memory allocation support.
+*/
+void vApplicationGetTimerTaskMemory (StaticTask_t **ppxTimerTaskTCBBuffer, StackType_t **ppxTimerTaskStackBuffer, uint32_t *pulTimerTaskStackSize) {
+  *ppxTimerTaskTCBBuffer   = &Timer_TCB;
+  *ppxTimerTaskStackBuffer = &Timer_Stack[0];
+  *pulTimerTaskStackSize   = (uint32_t)configTIMER_TASK_STACK_DEPTH;
+}
+
 
 /* USER CODE END 0 */
 
@@ -86,15 +125,18 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
-
+  xTaskCreate(task_one, "ONE", 128 * sizeof(void*), 0, tskIDLE_PRIORITY, 0);
+  //xTaskCreate(task_two, "TWO", 128 * sizeof(void*), 0, tskIDLE_PRIORITY, 0);
+  vTaskStartScheduler();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  int a = 0;
   while (1)
   {
     /* USER CODE END WHILE */
-
+    ++a;
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
