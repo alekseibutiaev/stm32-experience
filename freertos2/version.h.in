@@ -1,0 +1,5 @@
+#pragma once
+#ifndef __VERSION_H__
+#define __VERSION_H__
+#define VERSION "@freertos1_VERSION@"
+#endif /* __VERSION_H__ */
