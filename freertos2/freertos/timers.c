@@ -128,10 +128,10 @@ which static variables must be declared volatile. */
 /* The list in which active timers are stored.  Timers are referenced in expire
 time order, with the nearest expiry time at the front of the list.  Only the
 timer service task is allowed to access these lists. */
-PRIVILEGED_DATA static List_t xActiveTimerList1;
-PRIVILEGED_DATA static List_t xActiveTimerList2;
-PRIVILEGED_DATA static List_t *pxCurrentTimerList;
-PRIVILEGED_DATA static List_t *pxOverflowTimerList;
+PRIVILEGED_DATA static List_t xActiveTimerList1 = {0};
+PRIVILEGED_DATA static List_t xActiveTimerList2 = {0};
+PRIVILEGED_DATA static List_t *pxCurrentTimerList = NULL;
+PRIVILEGED_DATA static List_t *pxOverflowTimerList = NULL;
 
 /* A queue that is used to send commands to the timer service task. */
 PRIVILEGED_DATA static QueueHandle_t xTimerQueue = NULL;

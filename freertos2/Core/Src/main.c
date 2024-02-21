@@ -66,14 +66,14 @@ void SystemClock_Config(void);
 void task_one(void* param) {
   for(;;) {
     HAL_GPIO_TogglePin(led0_GPIO_Port, led0_Pin);
-    vTaskDelay(1000000);
+    vTaskDelay(1000);
   }
 }
 
 void task_two(void* param) {
   for(;;) {
     HAL_GPIO_TogglePin(led1_GPIO_Port, led1_Pin);
-    vTaskDelay(500000);
+    vTaskDelay(500);
   }
 }
 
@@ -125,8 +125,8 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
-  xTaskCreate(task_one, "ONE", 128 * sizeof(void*), 0, tskIDLE_PRIORITY, 0);
-  //xTaskCreate(task_two, "TWO", 128 * sizeof(void*), 0, tskIDLE_PRIORITY, 0);
+  xTaskCreate(task_one, "ONE", 128 * sizeof(void*), 0, 1, 0);
+  xTaskCreate(task_two, "TWO", 128 * sizeof(void*), 0, 1, 0);
   vTaskStartScheduler();
   /* USER CODE END 2 */
 

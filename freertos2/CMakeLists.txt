@@ -156,6 +156,7 @@ target_link_options(${CMAKE_PROJECT_NAME} PRIVATE
   -Wl,--gc-sections
   -static
   ${MFLOAT_ABI}
+  -mthumb
   -Wl,--start-group
   -lc
   -lm

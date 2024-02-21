@@ -200,9 +200,9 @@ add_library(freertos_kernel STATIC
 )
 
 target_include_directories(freertos_kernel
-    PUBLIC
-        include
-        ${FREERTOS_CONFIG_FILE_DIRECTORY}
+  PUBLIC
+  include
+  ${FREERTOS_CONFIG_FILE_DIRECTORY}
 )
 
 target_link_libraries(freertos_kernel freertos_kernel_port)

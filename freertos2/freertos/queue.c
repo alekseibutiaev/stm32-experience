@@ -1256,7 +1256,6 @@ Queue_t * const pxQueue = ( Queue_t * ) xQueue;
 	}
 	#endif
 
-
 	/* This function relaxes the coding standard somewhat to allow return
 	statements within the function itself.  This is done in the interest
 	of execution time efficiency. */

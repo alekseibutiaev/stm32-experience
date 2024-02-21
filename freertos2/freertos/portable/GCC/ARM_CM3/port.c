@@ -508,20 +508,20 @@ void xPortSysTickHandler( void )
 			/* Restart SysTick. */
 			portNVIC_SYSTICK_CTRL_REG |= portNVIC_SYSTICK_ENABLE_BIT;
 
-			/* Sleep until something happens.  configPRE_SLEEP_PROCESSING() can
+		/* Sleep until something happens.  configPRE_SLEEP_PROCESSING() can
 			set its parameter to 0 to indicate that its implementation contains
 			its own wait for interrupt or wait for event instruction, and so wfi
 			should not be executed again.  However, the original expected idle
 			time variable must remain unmodified, so a copy is taken. */
 			xModifiableIdleTime = xExpectedIdleTime;
-			configPRE_SLEEP_PROCESSING( xModifiableIdleTime );
+			configPRE_SLEEP_PROCESSING( &xModifiableIdleTime );
 			if( xModifiableIdleTime > 0 )
 			{
 				__asm volatile( "dsb" ::: "memory" );
 				__asm volatile( "wfi" );
 				__asm volatile( "isb" );
 			}
-			configPOST_SLEEP_PROCESSING( xExpectedIdleTime );
+			configPOST_SLEEP_PROCESSING( &xExpectedIdleTime );
 
 			/* Re-enable interrupts to allow the interrupt that brought the MCU
 			out of sleep mode to execute immediately.  see comments above

@@ -348,23 +348,23 @@ which static variables must be declared volatile. */
 PRIVILEGED_DATA TCB_t * volatile pxCurrentTCB = NULL;
 
 /* Lists for ready and blocked tasks. --------------------*/
-PRIVILEGED_DATA static List_t pxReadyTasksLists[ configMAX_PRIORITIES ];/*< Prioritised ready tasks. */
-PRIVILEGED_DATA static List_t xDelayedTaskList1;						/*< Delayed tasks. */
-PRIVILEGED_DATA static List_t xDelayedTaskList2;						/*< Delayed tasks (two lists are used - one for delays that have overflowed the current tick count. */
-PRIVILEGED_DATA static List_t * volatile pxDelayedTaskList;				/*< Points to the delayed task list currently being used. */
-PRIVILEGED_DATA static List_t * volatile pxOverflowDelayedTaskList;		/*< Points to the delayed task list currently being used to hold tasks that have overflowed the current tick count. */
-PRIVILEGED_DATA static List_t xPendingReadyList;						/*< Tasks that have been readied while the scheduler was suspended.  They will be moved to the ready list when the scheduler is resumed. */
+PRIVILEGED_DATA static List_t pxReadyTasksLists[ configMAX_PRIORITIES ] = {0};	/*< Prioritised ready tasks. */
+PRIVILEGED_DATA static List_t xDelayedTaskList1 = {0};								/*< Delayed tasks. */
+PRIVILEGED_DATA static List_t xDelayedTaskList2 = {0};								/*< Delayed tasks (two lists are used - one for delays that have overflowed the current tick count. */
+PRIVILEGED_DATA static List_t * volatile pxDelayedTaskList = NULL;					/*< Points to the delayed task list currently being used. */
+PRIVILEGED_DATA static List_t * volatile pxOverflowDelayedTaskList = NULL;			/*< Points to the delayed task list currently being used to hold tasks that have overflowed the current tick count. */
+PRIVILEGED_DATA static List_t xPendingReadyList = {0};								/*< Tasks that have been readied while the scheduler was suspended.  They will be moved to the ready list when the scheduler is resumed. */
 
 #if( INCLUDE_vTaskDelete == 1 )
 
-	PRIVILEGED_DATA static List_t xTasksWaitingTermination;				/*< Tasks that have been deleted - but their memory not yet freed. */
+	PRIVILEGED_DATA static List_t xTasksWaitingTermination = {0};					/*< Tasks that have been deleted - but their memory not yet freed. */
 	PRIVILEGED_DATA static volatile UBaseType_t uxDeletedTasksWaitingCleanUp = ( UBaseType_t ) 0U;
 
 #endif
 
 #if ( INCLUDE_vTaskSuspend == 1 )
 
-	PRIVILEGED_DATA static List_t xSuspendedTaskList;					/*< Tasks that are currently suspended. */
+	PRIVILEGED_DATA static List_t xSuspendedTaskList = {0};						/*< Tasks that are currently suspended. */
 
 #endif
 
@@ -403,21 +403,15 @@ PRIVILEGED_DATA static volatile UBaseType_t uxSchedulerSuspended	= ( UBaseType_t
 
 /* Callback function prototypes. --------------------------*/
 #if(  configCHECK_FOR_STACK_OVERFLOW > 0 )
-
 	extern void vApplicationStackOverflowHook( TaskHandle_t xTask, char *pcTaskName );
-
 #endif
 
 #if( configUSE_TICK_HOOK > 0 )
-
 	extern void vApplicationTickHook( void );
-
 #endif
 
 #if( configSUPPORT_STATIC_ALLOCATION == 1 )
-
 	extern void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize );
-
 #endif
 
 /* File private functions. --------------------------------*/
