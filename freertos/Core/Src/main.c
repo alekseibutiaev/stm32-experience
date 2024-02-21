@@ -73,7 +73,7 @@ void task_one(void* param) {
 void task_two(void* param) {
   for(;;) {
     HAL_GPIO_TogglePin(led1_GPIO_Port, led1_Pin);
-    vTaskDelay(500);
+    vTaskDelay(2000);
   }
 }
 

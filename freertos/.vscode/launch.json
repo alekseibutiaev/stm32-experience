@@ -5,13 +5,13 @@
       "type": "cppdbg",
       "request": "launch",
       "cwd" : "${workspaceRoot}",
-      "program": "${workspaceFolder}/build_Debug/freertos2.elf",
+      "program": "${workspaceFolder}/build_Debug/freertos.elf",
       "args": [],
       "stopAtEntry": true,
       "environment": [],
       "externalConsole": true,
       "debugServerArgs": "-f interface/stlink-v2.cfg -f target/stm32f1x.cfg -c \"transport select hla_swd\" -c \"reset_config srst_only\" -c \"tpiu config external uart on 72000000 2000000\"",
-      "x-debugServerArgs": "-f ${workspaceFolder}/freertos1.cfg",
+      "x-debugServerArgs": "-f ${workspaceFolder}/freertos.cfg",
       "preLaunchTask": "rebuild_flash",
       "serverLaunchTimeout": 20000,
       "filterStderr": true,
@@ -35,7 +35,7 @@
             "ignoreFailures": false
           },
           {
-            "text": "-file-exec-and-symbols ${workspaceFolder}/build_Debug/freertos2.elf",
+            "text": "-file-exec-and-symbols ${workspaceFolder}/build_Debug/freertos.elf",
             "description": "load file",
             "ignoreFailures": false
           },
@@ -67,14 +67,14 @@
       "preLaunchTask": "rebuild_flash", 
       "preLaunchCommands": ["monitor arm semihosting enable"],
       "cwd": "${workspaceRoot}",
-      "executable": "${workspaceFolder}/build_Debug/freertos2.elf",
+      "executable": "${workspaceFolder}/build_Debug/freertos.elf",
       "request": "launch",
       "type": "cortex-debug",
       "servertype": "openocd",
       "device": "STM32F103ZE",
       "runToMain": true,
       "configFiles": [
-        "${workspaceFolder}/freertos2.cfg"
+        "${workspaceFolder}/freertos.cfg"
       ],
       "svdFile": "${workspaceFolder}/STM32F103.svd",
       "interface": "swd",

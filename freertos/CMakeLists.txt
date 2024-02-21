@@ -13,7 +13,7 @@
 cmake_minimum_required(VERSION 3.20)
 
 ###################### CONSTANTS ######################################
-set (PROJECT_NAME                     "freertos2")
+set (PROJECT_NAME                     "freertos")
 set (PROJECT_TYPE_EXECUTABLE          "exe")
 set (PROJECT_TYPE_STATIC_LIBRARY      "static-lib")
 set (MCPU_CORTEX_M0				            "-mcpu=cortex-m0")
