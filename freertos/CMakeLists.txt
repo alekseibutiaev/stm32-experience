@@ -122,6 +122,18 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
   freertos_kernel_port
 )
 
+add_library(freertos_config INTERFACE)
+
+target_include_directories(${CMAKE_PROJECT_NAME} SYSTEM
+  INTERFACE
+  ./config
+)
+
+target_compile_definitions(${CMAKE_PROJECT_NAME}
+  PUBLIC
+  projCOVERAGE_TEST=0
+)
+
 target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
   $<$<CONFIG:Debug>:DEBUG>
   $<$<BOOL:${VBUS_ACTIVE_HIGH}>:ACTIVE_HIGH>
