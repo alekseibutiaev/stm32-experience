@@ -48,7 +48,6 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 option(DUMP_ASM "Create full assembly of final executable" OFF)
 
 set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/linker/STM32F103ZETx_FLASH.ld)
-
 set(STARTUP ${CMAKE_SOURCE_DIR}/startup/startup_stm32f103xe.s)
 set(MCU_MODEL STM32F103xE)
 
