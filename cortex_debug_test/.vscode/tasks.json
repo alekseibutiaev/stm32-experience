@@ -1,0 +1,20 @@
+{
+  "version":"2.0.0",
+  "tasks": [
+    {
+      "type": "shell",
+      "label": "upload",
+      "command": "make upload"
+    },
+    {
+      "type": "shell",
+      "label": "build",
+      "command": "pushd build_Debug; make all -j4; popd",
+    },
+    {
+      "type": "shell",
+      "label": "rebuild",
+      "command": "make -f build_Debug/Makefile clean all"
+    },
+  ]
+}

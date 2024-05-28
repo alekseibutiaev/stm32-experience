@@ -1,0 +1,26 @@
+{
+  "configurations": [
+    {
+      "cwd": "${workspaceRoot}",
+      "executable": "${workspaceRoot}/build_Debug/cortex-debug-test.elf",
+      "name": "Debug with OpenOCD",
+      "request": "launch",
+      "type": "cortex-debug",
+      "servertype": "openocd",
+      "preLaunchTask": "build",
+      "preLaunchCommands": [ "load", "enable breakpoint", "monitor reset" ],
+      "openOCDLaunchCommands": [
+        "adapter speed 4000"
+      ],
+      "configFiles": [
+        "interface/stlink.cfg",
+        "target/stm32f1x.cfg",
+      ],
+      "searchDir": [],
+      "runToEntryPoint": "main",
+      "showDevDebugOutput": "none",
+      "svdFile": "STM32F103.svd"
+    }
+
+  ]
+}
