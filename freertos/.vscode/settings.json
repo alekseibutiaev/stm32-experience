@@ -2,7 +2,7 @@
   "cmake.setBuildTypeOnMultiConfig": false,
   "cmake.buildDirectory": "${workspaceFolder}/build_${buildType}",
   "cmake.saveBeforeBuild": true,
-  "x-cmake.configureArgs": [
+  "cmake.configureArgs": [
     "-DCMAKE_TOOLCHAIN_FILE=tools_descriptor.cmake",
     "-DDUMP_ASM=OFF"
   ],
@@ -27,13 +27,14 @@
   "x-cortex-debug.JLinkGDBServerPath": "/opt/SEGGER/JLink/JLinkGDBServer",
   "x-cortex-debug.stutilPath": "/usr/bin/st-util",
   "x-cortex-debug.gdbPath": "/opt/arm-none-eabi-stm32/bin/arm-none-eabi-gdb",
-  "cortex-debug.gdbPath.linux": "/opt/arm-none-eabi-stm32/bin/arm-none-eabi-gdb",
+  "x0-cortex-debug.gdbPath.linux": "/opt/arm-none-eabi-stm32/bin/arm-none-eabi-gdb",
   "x1-cortex-debug.gdbPath.linux": "/usr/bin/gdb-multiarch",
-  "x2-cortex-debug.gdbPath.linux": "/opt/gcc-arm-none-eabi/bin/arm-none-eabi-gdb",
+  "xcortex-debug.gdbPath.linux": "/opt/gcc-arm-none-eabi/bin/arm-none-eabi-gdb",
   "cortex-debug.openocdPath.linux": "/usr/bin/openocd",
   "cortex-debug.stlinkPath.linux": "/usr/bin/st-util",
   "cortex-debug.JLinkGDBServerPath.linux": "/opt/SEGGER/JLink/JLinkGDBServer",
   "cortex-debug.liveWatchRefreshRate": 1000,
   "cortex-debug.armToolchainPath.linux": "/opt/arm-none-eabi-stm32/bin",
+  "cortex-debug.armToolchainPrefix": "arm-none-eabi",
   "memory-view.showMemoryPanel": true,
 }

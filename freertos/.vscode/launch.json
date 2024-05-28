@@ -5,7 +5,7 @@
       "type": "cppdbg",
       "request": "launch",
       "cwd" : "${workspaceRoot}",
-      "program": "${workspaceFolder}/build_Debug/freertos2.elf",
+      "program": "${workspaceFolder}/build_Debug/freertos.elf",
       "args": [],
       "stopAtEntry": true,
       "environment": [],
@@ -35,7 +35,7 @@
             "ignoreFailures": false
           },
           {
-            "text": "-file-exec-and-symbols ${workspaceFolder}/build_Debug/freertos2.elf",
+            "text": "-file-exec-and-symbols ${workspaceFolder}/build_Debug/freertos.elf",
             "description": "load file",
             "ignoreFailures": false
           },
@@ -64,21 +64,28 @@
     },
     {
       "name":"Cortex Debug",
-      "preLaunchTask": "rebuild_flash", 
-      "preLaunchCommands": ["monitor arm semihosting enable"],
       "cwd": "${workspaceRoot}",
-      "executable": "${workspaceFolder}/build_Debug/freertos2.elf",
+      "executable": "${workspaceFolder}/build_Debug/freertos.elf",
       "request": "launch",
       "type": "cortex-debug",
+      "runToEntryPoint": "main",
+      "preLaunchTask": "build_Debug", 
+      "preLaunchCommands": [ "load", "enable breakpoint", "monitor reset" ],
+      "postLaunchCommands": ["monitor reset halt"],
       "servertype": "openocd",
       "device": "STM32F103ZE",
-      "runToMain": true,
+      "x-configFiles": [
+        "interface/stlink.cfg",
+        "target/stm32f1x.cfg",
+      ],
       "configFiles": [
-        "${workspaceFolder}/freertos2.cfg"
+        "${workspaceFolder}/freertos.cfg"
       ],
       "svdFile": "${workspaceFolder}/STM32F103.svd",
-      "interface": "swd",
-      "swoConfig": {
+      "openOCDLaunchCommands": [
+        "adapter speed 4000"
+      ],
+      "x-swoConfig": {
         "enabled": false,
         "source": "probe",
         "swoFrequency": 2000000,
@@ -87,7 +94,6 @@
           {"port": 0, "type": "console", "label": "SWO output", "encoding":"ascii" }
         ]
       }
-          
     }
   ]
 }

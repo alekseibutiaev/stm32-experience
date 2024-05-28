@@ -13,7 +13,7 @@
 cmake_minimum_required(VERSION 3.20)
 
 ###################### CONSTANTS ######################################
-set (PROJECT_NAME                     "freertos2")
+set (PROJECT_NAME                     "freertos")
 set (PROJECT_TYPE_EXECUTABLE          "exe")
 set (PROJECT_TYPE_STATIC_LIBRARY      "static-lib")
 set (MCPU_CORTEX_M0				            "-mcpu=cortex-m0")
@@ -49,17 +49,16 @@ find_package(Git)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
-set(MCU_TYPE F103ZE)
-set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32${MCU_TYPE}Tx_FLASH.ld)
-set(STARTUP_SCRIPT ${CMAKE_SOURCE_DIR}/Core/Startup/startup_stm32f103xe.s)
-set(MCU_MODEL STM32F103xE)
-
 option(DUMP_ASM "Create full assembly of final executable" OFF)
 
-message("MCU_TYPE: " ${MCU_TYPE})
-message("LINKER_SCRIPT: " ${LINKER_SCRIPT})
+set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32F103ZETx_FLASH.ld)
+set(STARTUP ${CMAKE_SOURCE_DIR}/Core/Startup/startup_stm32f103xe.s)
+set(MCU_MODEL STM32F103xE)
+
+
 message("MCU_MODEL: " ${MCU_MODEL})
-message("STARTUP_SCRIPT: " ${STARTUP_SCRIPT})
+message("STARTUP: " ${STARTUP})
+message("LINKER_SCRIPT: " ${LINKER_SCRIPT})
 message("DUMP_ASM: " ${DUMP_ASM})
 
 set(PROJECT_INCLUDES
@@ -112,7 +111,7 @@ add_custom_target(version
 add_executable(${CMAKE_PROJECT_NAME}
   ${STM32CUBEMX_SOURCES}
   ${PROJECT_SOURCES}
-  ${STARTUP_SCRIPT}
+  ${STARTUP}
 )
 
 add_dependencies(${CMAKE_PROJECT_NAME} version)
@@ -124,8 +123,6 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
 
 target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
   $<$<CONFIG:Debug>:DEBUG>
-  $<$<BOOL:${VBUS_ACTIVE_HIGH}>:ACTIVE_HIGH>
-  $<$<BOOL:${BOARD_NUCLEO}>:NUCLEO>
   ${MCU_MODEL}
   USE_HAL_DRIVER
 )
@@ -177,6 +174,9 @@ if (${DUMP_ASM})
     COMMAND ${CMAKE_OBJDUMP} -D $<TARGET_FILE:${CMAKE_PROJECT_NAME}> > ${CMAKE_PROJECT_NAME}.s)
 endif()
 
+# keep example upload for jlink
+set(JLINKEXE "/opt/SEGGER/JLink/JLinkExe")
+
 add_custom_command(OUTPUT jlink_cmd_script
   COMMAND echo "device ${DEVICE}" >> jlink_cmd_script
   COMMAND echo "if swd" >> jlink_cmd_script
@@ -191,19 +191,22 @@ add_custom_target(jlink_upload DEPENDS ${CMAKE_PROJECT_NAME} jlink_cmd_script
   COMMAND ${JLINKEXE} -CommanderScript jlink_cmd_script
 )
 
+# keep example upload for st-utils
+set(ST-UTILS "/usr/bin/st-flash")
+
 add_custom_target(stlink_upload DEPENDS ${CMAKE_PROJECT_NAME}
   COMMAND echo "run ${ST-UTILS} write ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.bin 0x08000000"
   COMMAND ${ST-UTILS} write ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.bin 0x08000000
 )
 
 add_custom_command(
-  OUTPUT ocd_upload
+  OUTPUT upload_cmd
   DEPENDS ${CMAKE_PROJECT_NAME}
-  COMMAND touch ocd_upload
-  COMMAND echo "run: openocd -f ${CMAKE_SOURCE_DIR}/${CMAKE_PROJECT_NAME}.cfg -c \"init; reset halt; flash write_image erase ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.bin 0x08000000; reset; shutdown\""
+  COMMAND touch upload_cmd
+  COMMAND echo "run: openocd -f ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.cfg -c \"program ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.bin 0x08000000 verify reset exit\""
   COMMAND openocd -f ${CMAKE_SOURCE_DIR}/${CMAKE_PROJECT_NAME}.cfg
-    -c \"init\; reset halt\; flash write_image erase ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.bin 0x08000000\; reset\; shutdown \"
+    -c \"program ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.bin 0x08000000 verify reset exit\"
 )
 
-add_custom_target(rebuild_flash DEPENDS ocd_upload)
+add_custom_target(upload DEPENDS upload_cmd)
 

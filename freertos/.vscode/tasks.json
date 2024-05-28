@@ -2,18 +2,9 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "rebuild_flash",
-      "type": "cmake",
-      "command": "build",
-      "targets": [
-        "all",
-        "rebuild_flash"
-      ],
-      "problemMatcher": [],
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      }
+      "type": "shell",
+      "label": "build_Debug",
+      "command": "pushd build_Debug; make  all; popd",
     }
   ]
 }

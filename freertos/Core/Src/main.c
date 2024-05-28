@@ -63,11 +63,19 @@ void SystemClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+#define ARRAY_SIZE(__ARRAY__) (sizeof(__ARRAY__) / sizeof(*__ARRAY__))
+
 void task_one(void* param) {
+  uint32_t buf[32] = { 0 };
+  uint32_t* pbuf = buf;
+  uint32_t i = 0;
   for(;;) {
     HAL_GPIO_TogglePin(led0_GPIO_Port, led0_Pin);
     vTaskDelay(1000);
+    ++buf[i++];
+    i = i % ARRAY_SIZE(buf);
   }
+  (void)pbuf;
 }
 
 void task_two(void* param) {
