@@ -160,13 +160,13 @@ if (${DUMP_ASM})
 endif()
 
 add_custom_command(
-  OUTPUT ocd_upload
+  OUTPUT upload_cmd
   DEPENDS ${CMAKE_PROJECT_NAME}
-  COMMAND touch ocd_upload
-  COMMAND echo "run: openocd -f ${CMAKE_SOURCE_DIR}/${CMAKE_PROJECT_NAME}.cfg -c \"init; reset halt; flash write_image erase ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.bin 0x08000000; reset; shutdown\""
+  COMMAND touch upload_cmd
+  COMMAND echo "run: openocd -f ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.cfg -c \"program ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.bin 0x08000000 verify reset exit\""
   COMMAND openocd -f ${CMAKE_SOURCE_DIR}/${CMAKE_PROJECT_NAME}.cfg
-    -c \"init\; reset halt\; flash write_image erase ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.bin 0x08000000\; reset run\"
+    -c \"program ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.bin 0x08000000 verify reset exit\"
 )
 
-add_custom_target(upload DEPENDS ocd_upload)
+add_custom_target(upload DEPENDS upload_cmd)
 
