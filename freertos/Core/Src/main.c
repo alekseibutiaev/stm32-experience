@@ -65,17 +65,29 @@ void SystemClock_Config(void);
 
 #define ARRAY_SIZE(__ARRAY__) (sizeof(__ARRAY__) / sizeof(*__ARRAY__))
 
+void rec(uint32_t* r) {
+  if(*r < 10) {
+    ++*r;
+    rec(r);
+  }
+}
+
 void task_one(void* param) {
   uint32_t buf[32] = { 0 };
   uint32_t* pbuf = buf;
   uint32_t i = 0;
+  uint32_t r = 0;
+  UBaseType_t uxHighWatherMark = uxTaskGetStackHighWaterMark(0);
   for(;;) {
     HAL_GPIO_TogglePin(led0_GPIO_Port, led0_Pin);
     vTaskDelay(1000);
     ++buf[i++];
     i = i % ARRAY_SIZE(buf);
+    uxHighWatherMark = uxTaskGetStackHighWaterMark(0);
+    rec(&r);
   }
   (void)pbuf;
+  (void)uxHighWatherMark;
 }
 
 void task_two(void* param) {
@@ -83,6 +95,10 @@ void task_two(void* param) {
     HAL_GPIO_TogglePin(led1_GPIO_Port, led1_Pin);
     vTaskDelay(500);
   }
+}
+
+void vApplicationStackOverflowHook(TaskHandle_t task, int8_t* name) {
+  return;
 }
 
 void vApplicationGetIdleTaskMemory (StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize) {
