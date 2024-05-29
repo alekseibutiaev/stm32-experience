@@ -3,8 +3,32 @@
     "default": "Debug freertos",
     "description": "build variants",
     "choices": {
-      "Debug freertos": {
-        "short": "Debug freertos",
+      "Debug freertos V10.0.1": {
+        "short": "Debug freertos V10.0.1",
+        "buildType": "Debug",
+        "settings" : {
+          "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
+          "CMAKE_VERBOSE_MAKEFILE" : "ON",
+          "FreeRTOS_VERSION": "V10.0.1",
+          "FREERTOS_CONFIG_FILE_DIRECTORY" : "${workspaceFolder}/freertos",
+          "FREERTOS_PORT" : "GCC_ARM_CM3",
+          "DUMP_ASM": "ON"
+        } 
+      },
+      "Release freertos V10.0.1": {
+        "short": "Release freertos V10.0.1",
+        "buildType": "Release",
+        "settings" : {
+          "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
+          "CMAKE_VERBOSE_MAKEFILE" : "ON",
+          "FreeRTOS_VERSION": "V10.0.1",
+          "FREERTOS_CONFIG_FILE_DIRECTORY" : "${workspaceFolder}/freertos",
+          "FREERTOS_PORT" : "GCC_ARM_CM3",
+          "DUMP_ASM": "ON"
+        } 
+      },
+      "Debug freertos V10.6.2": {
+        "short": "Debug freertos V10.6.2",
         "buildType": "Debug",
         "settings" : {
           "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
@@ -15,8 +39,8 @@
           "DUMP_ASM": "ON"
         } 
       },
-      "Release freertos": {
-        "short": "Release freertos",
+      "Release freertos V10.6.2": {
+        "short": "Release freertos V10.6.2",
         "buildType": "Release",
         "settings" : {
           "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
@@ -27,6 +51,7 @@
           "DUMP_ASM": "ON"
         } 
       }
+
     }
   }
 }
