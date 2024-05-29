@@ -49,13 +49,18 @@ find_package(Git)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
+option(FreeRTOS_VERSION "FreeRTOS version" "V10.0.1")
 option(DUMP_ASM "Create full assembly of final executable" OFF)
 
-set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32F103ZETx_FLASH.ld)
+set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/linker/STM32F103ZETx_FLASH.ld)
 set(STARTUP ${CMAKE_SOURCE_DIR}/Core/Startup/startup_stm32f103xe.s)
 set(MCU_MODEL STM32F103xE)
 
+add_library(freertos_config INTERFACE) 
+target_include_directories(freertos_config SYSTEM INTERFACE include)
+target_compile_definitions(freertos_config INTERFACE projCOVERAGE_TEST=0)
 
+message("FreeRTOS_VERSION: " ${FreeRTOS_VERSION})
 message("MCU_MODEL: " ${MCU_MODEL})
 message("STARTUP: " ${STARTUP})
 message("LINKER_SCRIPT: " ${LINKER_SCRIPT})
@@ -67,7 +72,8 @@ set(PROJECT_INCLUDES
   ${CMAKE_SOURCE_DIR}/Drivers/CMSIS/Include
   ${CMAKE_SOURCE_DIR}/Drivers/STM32F1xx_HAL_Driver/Inc
   ${CMAKE_SOURCE_DIR}/Drivers/STM32F1xx_HAL_Driver/Inc/Legacy
-  ${CMAKE_SOURCE_DIR}/freertos/include
+  ${CMAKE_SOURCE_DIR}/freertos
+  ${CMAKE_SOURCE_DIR}/freertos/${FreeRTOS_VERSION}/include
   ${CMAKE_SOURCE_DIR}/project
   ${CMAKE_BINARY_DIR}
 )
@@ -162,7 +168,7 @@ target_link_options(${CMAKE_PROJECT_NAME} PRIVATE
   -Wl,--print-memory-usage
 )
 
-add_subdirectory(freertos)
+add_subdirectory(freertos/${FreeRTOS_VERSION})
 
 add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
   COMMAND ${CMAKE_SIZE} $<TARGET_FILE:${CMAKE_PROJECT_NAME}>

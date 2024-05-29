@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include <stm32f1xx.h>
 
 #include <FreeRTOS.h>
@@ -15,7 +16,7 @@ static StackType_t  Idle_Stack[configMINIMAL_STACK_SIZE];
 static StaticTask_t Timer_TCB;
 static StackType_t  Timer_Stack[configTIMER_TASK_STACK_DEPTH];
 
-void vApplicationStackOverflowHook(TaskHandle_t task, int8_t* name) {
+void vApplicationStackOverflowHook(TaskHandle_t task, char* name) {
   return;
 }
 

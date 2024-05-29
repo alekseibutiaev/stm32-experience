@@ -9,7 +9,8 @@
         "settings" : {
           "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
           "CMAKE_VERBOSE_MAKEFILE" : "ON",
-          "FREERTOS_CONFIG_FILE_DIRECTORY" : "/home/butiaev/project/stm32-experience/freertos",
+          "FreeRTOS_VERSION": "V10.6.2",
+          "FREERTOS_CONFIG_FILE_DIRECTORY" : "${workspaceFolder}/freertos",
           "FREERTOS_PORT" : "GCC_ARM_CM3",
           "DUMP_ASM": "ON"
         } 
@@ -20,7 +21,8 @@
         "settings" : {
           "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
           "CMAKE_VERBOSE_MAKEFILE" : "ON",
-          "FREERTOS_CONFIG_FILE_DIRECTORY" : "/home/butiaev/project/stm32-experience/freertos",
+          "FreeRTOS_VERSION": "V10.6.2",
+          "FREERTOS_CONFIG_FILE_DIRECTORY" : "${workspaceFolder}/freertos",
           "FREERTOS_PORT" : "GCC_ARM_CM3",
           "DUMP_ASM": "ON"
         } 
