@@ -79,7 +79,7 @@
         "target/stm32f1x.cfg",
       ],
       "configFiles": [
-        "${workspaceFolder}/freertos.cfg"
+        "${workspaceFolder}/freertos.ocd.cfg"
       ],
       "svdFile": "${workspaceFolder}/STM32F103.svd",
       "openOCDLaunchCommands": [

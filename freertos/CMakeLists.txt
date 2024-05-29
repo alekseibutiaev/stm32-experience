@@ -104,6 +104,7 @@ add_custom_target(version
     -D SRC=${CMAKE_SOURCE_DIR}/version.h.in
     -D DST=${CMAKE_BINARY_DIR}/version.h
     -D GIT_EXECUTABLE=${GIT_EXECUTABLE}
+    -D TAG=${TAG_MASK}
     -D NAME=${PROJECT_NAME}
     -P ${CMAKE_MODULE_PATH}GenerateVersionHeader.cmake
 )
@@ -203,8 +204,7 @@ add_custom_command(
   OUTPUT upload_cmd
   DEPENDS ${CMAKE_PROJECT_NAME}
   COMMAND touch upload_cmd
-  COMMAND echo "run: openocd -f ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.cfg -c \"program ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.bin 0x08000000 verify reset exit\""
-  COMMAND openocd -f ${CMAKE_SOURCE_DIR}/${CMAKE_PROJECT_NAME}.cfg
+  COMMAND openocd -f ${CMAKE_SOURCE_DIR}/${CMAKE_PROJECT_NAME}.ocd.cfg
     -c \"program ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.bin 0x08000000 verify reset exit\"
 )
 
