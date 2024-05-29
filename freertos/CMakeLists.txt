@@ -57,7 +57,7 @@ set(STARTUP ${CMAKE_SOURCE_DIR}/Core/Startup/startup_stm32f103xe.s)
 set(MCU_MODEL STM32F103xE)
 
 add_library(freertos_config INTERFACE) 
-target_include_directories(freertos_config SYSTEM INTERFACE include)
+target_include_directories(freertos_config SYSTEM INTERFACE ${FREERTOS_CONFIG_FILE_DIRECTORY} )
 target_compile_definitions(freertos_config INTERFACE projCOVERAGE_TEST=0)
 
 message("FreeRTOS_VERSION: " ${FreeRTOS_VERSION})
