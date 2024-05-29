@@ -1,13 +1,10 @@
-
-
-#ifndef FREERTOS_CONFIG_H
-#define FREERTOS_CONFIG_H
-
+#ifndef __FREERTOS_CONFIG_H__
+#define __FREERTOS_CONFIG_H__
 
 #if defined(__ICCARM__) || defined(__CC_ARM) || defined(__GNUC__)
- #include <stdint.h>
- extern uint32_t SystemCoreClock;
- void xPortSysTickHandler(void);
+  #include <stdint.h>
+  extern uint32_t SystemCoreClock;
+  void xPortSysTickHandler(void);
 #endif
 
 
@@ -37,9 +34,6 @@
 #define configTIMER_TASK_PRIORITY ( 2 )
 #define configTIMER_QUEUE_LENGTH 10
 #define configTIMER_TASK_STACK_DEPTH 256
-
-#define configUSE_NEWLIB_REENTRANT 1
-
 
 /* Cortex-M specific definitions. */
 #ifdef __NVIC_PRIO_BITS
@@ -75,4 +69,4 @@ standard names. */
 #define vPortSVCHandler SVC_Handler
 #define xPortPendSVHandler PendSV_Handler
 
-#endif /* FREERTOS_CONFIG_H */
+#endif /* __FREERTOS_CONFIG_H__ */

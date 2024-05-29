@@ -22,8 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "FreeRTOS.h"
-#include "task.h"
+#include <project.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -42,16 +41,7 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-
 /* USER CODE BEGIN PV */
-/* Idle task control block and stack */
-static StaticTask_t Idle_TCB;
-static StackType_t  Idle_Stack[configMINIMAL_STACK_SIZE];
-
-/* Timer task control block and stack */
-static StaticTask_t Timer_TCB;
-static StackType_t  Timer_Stack[configTIMER_TASK_STACK_DEPTH];
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -62,62 +52,6 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
-#define ARRAY_SIZE(__ARRAY__) (sizeof(__ARRAY__) / sizeof(*__ARRAY__))
-
-void rec(uint32_t* r) {
-  if(*r < 10) {
-    ++*r;
-    rec(r);
-  }
-}
-
-void task_one(void* param) {
-  uint32_t buf[32] = { 0 };
-  uint32_t* pbuf = buf;
-  uint32_t i = 0;
-  uint32_t r = 0;
-  UBaseType_t uxHighWatherMark = uxTaskGetStackHighWaterMark(0);
-  for(;;) {
-    HAL_GPIO_TogglePin(led0_GPIO_Port, led0_Pin);
-    vTaskDelay(1000);
-    ++buf[i++];
-    i = i % ARRAY_SIZE(buf);
-    uxHighWatherMark = uxTaskGetStackHighWaterMark(0);
-    rec(&r);
-  }
-  (void)pbuf;
-  (void)uxHighWatherMark;
-}
-
-void task_two(void* param) {
-  for(;;) {
-    HAL_GPIO_TogglePin(led1_GPIO_Port, led1_Pin);
-    vTaskDelay(500);
-  }
-}
-
-void vApplicationStackOverflowHook(TaskHandle_t task, int8_t* name) {
-  return;
-}
-
-void vApplicationGetIdleTaskMemory (StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize) {
-  *ppxIdleTaskTCBBuffer   = &Idle_TCB;
-  *ppxIdleTaskStackBuffer = &Idle_Stack[0];
-  *pulIdleTaskStackSize   = (uint32_t)configMINIMAL_STACK_SIZE;
-}
-
-/*
-  vApplicationGetTimerTaskMemory gets called when configSUPPORT_STATIC_ALLOCATION
-  equals to 1 and is required for static memory allocation support.
-*/
-void vApplicationGetTimerTaskMemory (StaticTask_t **ppxTimerTaskTCBBuffer, StackType_t **ppxTimerTaskStackBuffer, uint32_t *pulTimerTaskStackSize) {
-  *ppxTimerTaskTCBBuffer   = &Timer_TCB;
-  *ppxTimerTaskStackBuffer = &Timer_Stack[0];
-  *pulTimerTaskStackSize   = (uint32_t)configTIMER_TASK_STACK_DEPTH;
-}
-
-
 /* USER CODE END 0 */
 
 /**
@@ -149,18 +83,13 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
-  xTaskCreate(task_one, "ONE", 128 * sizeof(void*), 0, 1, 0);
-  xTaskCreate(task_two, "TWO", 128 * sizeof(void*), 0, 1, 0);
-  vTaskStartScheduler();
+  start();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  int a = 0;
-  while (1)
-  {
+  for(;;) {
     /* USER CODE END WHILE */
-    ++a;
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
