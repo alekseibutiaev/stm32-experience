@@ -46,21 +46,10 @@ find_package(Git)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
-option(FreeRTOS_VERSION "FreeRTOS version" OFF)
 option(DUMP_ASM "Create full assembly of final executable" OFF)
-option(FreeRTOS_HEAP "Heap type" OFF)
 
-if(FreeRTOS_VERSION MATCHES OFF)
-  set(FREERTOS_VERSION "V10.0.1")
-else()
-  set(FREERTOS_VERSION ${FreeRTOS_VERSION})
-endif()
-
-if(FreeRTOS_HEAP MATCHES OFF)
-  set(FREERTOS_HEAP "4")
-else()
-  set(FREERTOS_HEAP ${FreeRTOS_HEAP})
-endif()
+set(FREERTOS_HEAP "4" CACHE STRING "use heap type. by default 4")
+set(FreeRTOS_VERSION "V10.0.1" CACHE STRING "select FreeRTOS version. by default FreeRTOS V10.0.1")
 
 set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/linker/STM32F103ZETx_FLASH.ld)
 set(STARTUP ${CMAKE_SOURCE_DIR}/Core/Startup/startup_stm32f103xe.s)
@@ -70,7 +59,7 @@ add_library(freertos_config INTERFACE)
 target_include_directories(freertos_config SYSTEM INTERFACE ${FREERTOS_CONFIG_FILE_DIRECTORY} )
 target_compile_definitions(freertos_config INTERFACE projCOVERAGE_TEST=0)
 
-message("FREERTOS_VERSION: " ${FREERTOS_VERSION})
+message("FreeRTOS_VERSION: " ${FreeRTOS_VERSION})
 message("FREERTOS_HEAP: " ${FREERTOS_HEAP})
 message("MCU_MODEL: " ${MCU_MODEL})
 message("STARTUP: " ${STARTUP})
@@ -179,7 +168,7 @@ target_link_options(${CMAKE_PROJECT_NAME} PRIVATE
   -Wl,--print-memory-usage
 )
 
-add_subdirectory(freertos/${FREERTOS_VERSION})
+add_subdirectory(freertos/${FreeRTOS_VERSION})
 
 add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
   COMMAND ${CMAKE_SIZE} $<TARGET_FILE:${CMAKE_PROJECT_NAME}>
