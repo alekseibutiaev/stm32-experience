@@ -13,7 +13,7 @@
           "FREERTOS_CONFIG_FILE_DIRECTORY" : "${workspaceFolder}/freertos",
           "FREERTOS_PORT" : "GCC_ARM_CM3",
           "DUMP_ASM": "ON"
-        } 
+        }
       },
       "Release freertos V10.0.1": {
         "short": "Release freertos V10.0.1",
@@ -25,7 +25,7 @@
           "FREERTOS_CONFIG_FILE_DIRECTORY" : "${workspaceFolder}/freertos",
           "FREERTOS_PORT" : "GCC_ARM_CM3",
           "DUMP_ASM": "ON"
-        } 
+        }
       },
       "Debug freertos V10.6.2": {
         "short": "Debug freertos V10.6.2",
@@ -37,7 +37,7 @@
           "FREERTOS_CONFIG_FILE_DIRECTORY" : "${workspaceFolder}/freertos",
           "FREERTOS_PORT" : "GCC_ARM_CM3",
           "DUMP_ASM": "ON"
-        } 
+        }
       },
       "Release freertos V10.6.2": {
         "short": "Release freertos V10.6.2",
@@ -49,9 +49,32 @@
           "FREERTOS_CONFIG_FILE_DIRECTORY" : "${workspaceFolder}/freertos",
           "FREERTOS_PORT" : "GCC_ARM_CM3",
           "DUMP_ASM": "ON"
-        } 
+        }
+      },
+      "Debug freertos V11.1.0": {
+        "short": "Debug freertos V11.1.0",
+        "buildType": "Debug",
+        "settings" : {
+          "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
+          "CMAKE_VERBOSE_MAKEFILE" : "ON",
+          "FreeRTOS_VERSION": "V11.1.0",
+          "FREERTOS_CONFIG_FILE_DIRECTORY" : "${workspaceFolder}/freertos",
+          "FREERTOS_PORT" : "GCC_ARM_CM3",
+          "DUMP_ASM": "ON"
+        }
+      },
+      "Release freertos V11.1.0": {
+        "short": "Release freertos V11.1.0",
+        "buildType": "Release",
+        "settings" : {
+          "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
+          "CMAKE_VERBOSE_MAKEFILE" : "ON",
+          "FreeRTOS_VERSION": "V11.1.0",
+          "FREERTOS_CONFIG_FILE_DIRECTORY" : "${workspaceFolder}/freertos",
+          "FREERTOS_PORT" : "GCC_ARM_CM3",
+          "DUMP_ASM": "ON"
+        }
       }
-
     }
   }
 }

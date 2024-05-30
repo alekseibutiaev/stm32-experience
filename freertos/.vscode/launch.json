@@ -79,7 +79,7 @@
         "target/stm32f1x.cfg",
       ],
       "configFiles": [
-        "${workspaceFolder}/freertos.ocd.cfg"
+        "${workspaceFolder}/openocd.cfg/hardware_reset_connect_under_reset.cfg"
       ],
       "svdFile": "${workspaceFolder}/STM32F103.svd",
       "openOCDLaunchCommands": [

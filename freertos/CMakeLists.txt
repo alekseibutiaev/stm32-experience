@@ -42,15 +42,25 @@ set(CMAKE_C_FLAGS "")
 set(CMAKE_CXX_FLAGS "")
 set(TAG_MASK "frtos_*")
 
-set(JLINKEXE "/opt/SEGGER/JLink/JLinkExe")
-set(ST-UTILS "/usr/bin/st-flash")
-
 find_package(Git)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
-option(FreeRTOS_VERSION "FreeRTOS version" "V10.0.1")
+option(FreeRTOS_VERSION "FreeRTOS version" OFF)
 option(DUMP_ASM "Create full assembly of final executable" OFF)
+option(FreeRTOS_HEAP "Heap type" OFF)
+
+if(FreeRTOS_VERSION MATCHES OFF)
+  set(FREERTOS_VERSION "V10.0.1")
+else()
+  set(FREERTOS_VERSION ${FreeRTOS_VERSION})
+endif()
+
+if(FreeRTOS_HEAP MATCHES OFF)
+  set(FREERTOS_HEAP "4")
+else()
+  set(FREERTOS_HEAP ${FreeRTOS_HEAP})
+endif()
 
 set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/linker/STM32F103ZETx_FLASH.ld)
 set(STARTUP ${CMAKE_SOURCE_DIR}/Core/Startup/startup_stm32f103xe.s)
@@ -60,7 +70,8 @@ add_library(freertos_config INTERFACE)
 target_include_directories(freertos_config SYSTEM INTERFACE ${FREERTOS_CONFIG_FILE_DIRECTORY} )
 target_compile_definitions(freertos_config INTERFACE projCOVERAGE_TEST=0)
 
-message("FreeRTOS_VERSION: " ${FreeRTOS_VERSION})
+message("FREERTOS_VERSION: " ${FREERTOS_VERSION})
+message("FREERTOS_HEAP: " ${FREERTOS_HEAP})
 message("MCU_MODEL: " ${MCU_MODEL})
 message("STARTUP: " ${STARTUP})
 message("LINKER_SCRIPT: " ${LINKER_SCRIPT})
@@ -73,7 +84,7 @@ set(PROJECT_INCLUDES
   ${CMAKE_SOURCE_DIR}/Drivers/STM32F1xx_HAL_Driver/Inc
   ${CMAKE_SOURCE_DIR}/Drivers/STM32F1xx_HAL_Driver/Inc/Legacy
   ${CMAKE_SOURCE_DIR}/freertos
-  ${CMAKE_SOURCE_DIR}/freertos/${FreeRTOS_VERSION}/include
+  ${CMAKE_SOURCE_DIR}/freertos/${FREERTOS_VERSION}/include
   ${CMAKE_SOURCE_DIR}/project
   ${CMAKE_BINARY_DIR}
 )
@@ -168,7 +179,7 @@ target_link_options(${CMAKE_PROJECT_NAME} PRIVATE
   -Wl,--print-memory-usage
 )
 
-add_subdirectory(freertos/${FreeRTOS_VERSION})
+add_subdirectory(freertos/${FREERTOS_VERSION})
 
 add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
   COMMAND ${CMAKE_SIZE} $<TARGET_FILE:${CMAKE_PROJECT_NAME}>
