@@ -103,6 +103,7 @@ set(CMAKE_C_FLAGS "${MCPU} -std=gnu11 ${MFPU} ${MFLOAT_ABI} ${RUNTIME_LIBRARY} -
 set(CMAKE_ASM_FLAGS "${MCPU} -x assembler-with-cpp $")
 
 project(${PROJECT_NAME})
+
 enable_language(ASM C CXX)
 
 add_custom_target(version

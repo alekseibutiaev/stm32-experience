@@ -1,4 +1,6 @@
 #include <stdint.h>
+#include <stdio.h>
+
 #include <stm32f1xx.h>
 
 #include <FreeRTOS.h>
@@ -15,6 +17,14 @@ static StackType_t  Idle_Stack[configMINIMAL_STACK_SIZE];
 /* Timer task control block and stack */
 static StaticTask_t Timer_TCB;
 static StackType_t  Timer_Stack[configTIMER_TASK_STACK_DEPTH];
+
+#if 0
+int __io_putchar(int ch) {
+  // Write character to ITM ch.0
+  ITM_SendChar(ch);
+  return(ch);
+}
+#endif
 
 void vApplicationStackOverflowHook(TaskHandle_t task, char* name) {
   return;
@@ -62,9 +72,11 @@ void task_one(void* param) {
 }
 
 void task_two(void* param) {
+  int i = 0;
   for(;;) {
     HAL_GPIO_TogglePin(led1_GPIO_Port, led1_Pin);
     vTaskDelay(500);
+    printf("out %d\n", i++);
   }
 }
 

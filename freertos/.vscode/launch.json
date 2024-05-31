@@ -74,10 +74,7 @@
       "postLaunchCommands": ["monitor reset halt"],
       "servertype": "openocd",
       "device": "STM32F103ZE",
-      "x-configFiles": [
-        "interface/stlink.cfg",
-        "target/stm32f1x.cfg",
-      ],
+      "x-rtos": "auto",
       "configFiles": [
         "${workspaceFolder}/openocd.cfg/hardware_reset_connect_under_reset.cfg"
       ],
@@ -85,13 +82,19 @@
       "openOCDLaunchCommands": [
         "adapter speed 4000"
       ],
-      "x-swoConfig": {
-        "enabled": false,
+      "swoConfig": {
+        "enabled": true,
         "source": "probe",
-        "swoFrequency": 2000000,
+        "swoFrequency": 1000000,
         "cpuFrequency": 72000000,
+        "swoPort": "",
         "decoders": [
-          {"port": 0, "type": "console", "label": "SWO output", "encoding":"ascii" }
+          {
+            "port": 0,
+            "type": "console",
+            "label": "SWO output",
+            "encoding":"ascii"
+          }
         ]
       }
     }
