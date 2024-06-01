@@ -68,10 +68,10 @@ void Error_Handler(void);
   #define led1_Pin GPIO_PIN_13
   #define led1_GPIO_Port GPIOC
 #elif defined(NUCLEO_F103RB)
-  #define led0_Pin GPIO_PIN_5
+  #define led0_Pin GPIO_PIN_6
   #define led0_GPIO_Port GPIOB
-  #define led1_Pin GPIO_PIN_6
-  #define led1_GPIO_Port GPIOB
+  #define led1_Pin GPIO_PIN_5
+  #define led1_GPIO_Port GPIOA
 #endif
 
 /* USER CODE BEGIN Private defines */

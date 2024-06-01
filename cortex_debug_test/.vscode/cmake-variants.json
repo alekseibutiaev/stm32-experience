@@ -23,6 +23,26 @@
           "DUMP_ASM": "ON"
         } 
       },
+      "NUCLEO_F103RB Debug": {
+        "short": "NUCLEO_F103RB Debug",
+        "buildType": "Debug",
+        "settings" : {
+          "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
+          "CMAKE_VERBOSE_MAKEFILE" : "ON",
+          "BOARD" : "NUCLEO_F103RB",
+          "DUMP_ASM": "ON"
+        } 
+      },
+      "NUCLEO_F103RB Release": {
+        "short": "NUCLEO_F103RB Release",
+        "buildType": "Release",
+        "settings" : {
+          "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
+          "CMAKE_VERBOSE_MAKEFILE" : "ON",
+          "BOARD" : "NUCLEO_F103RB",
+          "DUMP_ASM": "ON"
+        } 
+      },
       "DevEBox Debug": {
         "short": "DevEBox Debug",
         "buildType": "Debug",
