@@ -2,6 +2,7 @@
   "configurations": [
     {
       "cwd": "${workspaceRoot}",
+      "x-executable": "${config:cmake.buildDirectory}/cortex-debug-test.elf",
       "executable": "${workspaceRoot}/build_Debug/cortex-debug-test.elf",
       "name": "Debug with OpenOCD",
       "request": "launch",
@@ -22,7 +23,7 @@
       "svdFile": "STM32F103.svd",
       "swoConfig": {
         "enabled": true,
-        "source": "socket",
+        "source": "probe",
         "swoFrequency": 2000000,
         "cpuFrequency": 72000000,
         "swoPort": "5555",

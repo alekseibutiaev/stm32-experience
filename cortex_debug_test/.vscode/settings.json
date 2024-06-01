@@ -27,7 +27,7 @@
   "cortex-debug.gdbPath.linux": "/opt/arm-none-eabi-stm32/bin/arm-none-eabi-gdb",
   "x1-cortex-debug.gdbPath.linux": "/usr/bin/gdb-multiarch",
   "x2-cortex-debug.gdbPath.linux": "/opt/gcc-arm-none-eabi/bin/arm-none-eabi-gdb",
-  "cortex-debug.openocdPath.linux": "/usr/bin/openocd",
+  "x-cortex-debug.openocdPath.linux": "/usr/bin/openocd",
   "cortex-debug.stlinkPath.linux": "/usr/bin/st-util",
   "cortex-debug.JLinkGDBServerPath.linux": "/opt/SEGGER/JLink/JLinkGDBServer",
   "cortex-debug.liveWatchRefreshRate": 5000,
@@ -35,6 +35,7 @@
   "cortex-debug.armToolchainPath": "/opt/arm-none-eabi-stm32/bin",
   "cortex-debug.armToolchainPrefix": "arm-none-eabi",
   "cortex-debug.gdbPath": "/opt/arm-none-eabi-stm32/bin/arm-none-eabi-gdb",
-  "cortex-debug.openocdPath": "/usr/bin/openocd",
-  "cortex-debug.stlinkPath": "/usr/bin/st-util"
+  "x-cortex-debug.openocdPath": "/usr/bin/openocd",
+  "cortex-debug.stlinkPath": "/usr/bin/st-util",
+  "cortex-debug.openocdPath": "/opt/openocd-0.12.0/bin/openocd",
 }
