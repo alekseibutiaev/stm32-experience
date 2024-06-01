@@ -9,18 +9,32 @@
       "servertype": "openocd",
       "preLaunchTask": "build",
       "preLaunchCommands": [ "load", "enable breakpoint", "monitor reset" ],
+      "postLaunchCommands": ["monitor reset halt"],
       "openOCDLaunchCommands": [
         "adapter speed 4000"
       ],
       "configFiles": [
-        "interface/stlink.cfg",
-        "target/stm32f1x.cfg",
+        "${workspaceRoot}/openocd.cfg/hardware_reset_connect_under_reset.cfg"
       ],
       "searchDir": [],
       "runToEntryPoint": "main",
       "showDevDebugOutput": "none",
-      "svdFile": "STM32F103.svd"
+      "svdFile": "STM32F103.svd",
+      "swoConfig": {
+        "enabled": true,
+        "source": "socket",
+        "swoFrequency": 2000000,
+        "cpuFrequency": 72000000,
+        "swoPort": "5555",
+        "decoders": [
+          {
+            "port": 0,
+            "type": "console",
+            "label": "SWO output",
+            "encoding":"ascii"
+          }
+        ]
+      }
     }
-
   ]
 }
