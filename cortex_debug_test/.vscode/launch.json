@@ -2,8 +2,7 @@
   "configurations": [
     {
       "cwd": "${workspaceRoot}",
-      "x-executable": "${config:cmake.buildDirectory}/cortex-debug-test.elf",
-      "executable": "${workspaceRoot}/build_Debug/cortex-debug-test.elf",
+      "executable": "${command:cmake.buildDirectory}/cortex-debug-test.elf",
       "name": "Debug with OpenOCD",
       "request": "launch",
       "type": "cortex-debug",
