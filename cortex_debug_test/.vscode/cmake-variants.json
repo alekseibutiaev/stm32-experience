@@ -20,7 +20,7 @@
           "CMAKE_VERBOSE_MAKEFILE" : "ON",
           "DUMP_ASM": "ON"
         } 
-      },
+      }
     }
   }
 }

@@ -28,11 +28,18 @@
         "swoPort": "5555",
         "decoders": [
           {
-            "port": 0,
+            "port": 1,
+            "type": "console",
+            "label": "SWO output",
+            "encoding":"ascii"
+          },
+          {
+            "port": 10,
             "type": "console",
             "label": "SWO output",
             "encoding":"ascii"
           }
+
         ]
       }
     }
