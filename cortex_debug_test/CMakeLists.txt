@@ -42,16 +42,31 @@ set(CMAKE_C_FLAGS "")
 set(CMAKE_CXX_FLAGS "")
 set(TAG_MASK "cdt_*")
 
+# Skip link step during toolchain validation.
+set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
+
 find_package(Git)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
 option(DUMP_ASM "Create full assembly of final executable" OFF)
 
-set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/linker/STM32F103ZETx_FLASH.ld)
-set(STARTUP ${CMAKE_SOURCE_DIR}/startup/startup_stm32f103xe.s)
-set(MCU_MODEL STM32F103xE)
+set(BOARD "DevEBox" CACHE STRING "board type DevEBox, BluePill. by default DevEBox")
 
+if(${BOARD} STREQUAL "DevEBox")
+  set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/linker/STM32F103ZETx_FLASH.ld)
+  set(STARTUP ${CMAKE_SOURCE_DIR}/startup/startup_stm32f103xe.s)
+  set(MCU_MODEL STM32F103xE)
+elseif(${BOARD} STREQUAL "BluePill")
+  set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/linker/STM32F103C8Tx_FLASH.ld)
+  set(STARTUP ${CMAKE_SOURCE_DIR}/startup/startup_stm32f103xb.s)
+  set(MCU_MODEL STM32F103xB)
+elseif(${BOARD} STREQUAL "NUCLEO-F103RB")
+else()
+  message(FATAL_ERROR "unsipported boards" ${BOARD})
+endif()
+
+message("BOARD: " ${BOARD})
 message("MCU_MODEL: " ${MCU_MODEL})
 message("STARTUP: " ${STARTUP})
 message("LINKER_SCRIPT: " ${LINKER_SCRIPT})
@@ -115,8 +130,9 @@ add_dependencies(${CMAKE_PROJECT_NAME} version)
 
 target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
   $<$<CONFIG:Debug>:DEBUG>
-  ${MCU_MODEL}
   USE_HAL_DRIVER
+  ${MCU_MODEL}
+  ${BOARD}
 )
 
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE

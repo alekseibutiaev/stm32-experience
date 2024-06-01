@@ -57,10 +57,22 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define led1_Pin GPIO_PIN_5
-#define led1_GPIO_Port GPIOE
-#define led0_Pin GPIO_PIN_5
-#define led0_GPIO_Port GPIOB
+#if defined(DevEBox)
+  #define led0_Pin GPIO_PIN_5
+  #define led0_GPIO_Port GPIOB
+  #define led1_Pin GPIO_PIN_5
+  #define led1_GPIO_Port GPIOE
+#elif defined(BluePill)
+  #define led0_Pin GPIO_PIN_5
+  #define led0_GPIO_Port GPIOB
+  #define led1_Pin GPIO_PIN_13
+  #define led1_GPIO_Port GPIOC
+#elif defined(NUCLEO_F103RB)
+  #define led0_Pin GPIO_PIN_5
+  #define led0_GPIO_Port GPIOB
+  #define led1_Pin GPIO_PIN_6
+  #define led1_GPIO_Port GPIOB
+#endif
 
 /* USER CODE BEGIN Private defines */
 

@@ -39,15 +39,26 @@
         * EVENT_OUT
         * EXTI
 */
-void MX_GPIO_Init(void)
+void MX_GPIO_Init(void) 
 {
 
   GPIO_InitTypeDef GPIO_InitStruct = {0};
 
+#if defined(DevEBox)
   /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOE_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
+  __HAL_RCC_GPIOE_CLK_ENABLE();
+#elif defined(BluePill)
+   /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
+  __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOD_CLK_ENABLE();
+#elif defined(NUCLEO_F103RB)
+  __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
+#endif
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(led1_GPIO_Port, led1_Pin, GPIO_PIN_RESET);

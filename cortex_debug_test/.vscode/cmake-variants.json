@@ -1,23 +1,45 @@
 {
   "buildType": {
-    "default": "Debug",
+    "default": "BluePill Debug",
     "description": "build variants",
     "choices": {
-      "Debug OpenOCD": {
-        "short": "Debug",
+      "BluePill Debug": {
+        "short": "BluePill Debug",
         "buildType": "Debug",
         "settings" : {
           "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
           "CMAKE_VERBOSE_MAKEFILE" : "ON",
+          "BOARD" : "BluePill",
           "DUMP_ASM": "ON"
         } 
       },
-      "Release OpenOCD": {
-        "short": "Release",
+      "BluePill Release": {
+        "short": "BluePill Release",
         "buildType": "Release",
         "settings" : {
           "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
           "CMAKE_VERBOSE_MAKEFILE" : "ON",
+          "BOARD" : "BluePill",
+          "DUMP_ASM": "ON"
+        } 
+      },
+      "DevEBox Debug": {
+        "short": "DevEBox Debug",
+        "buildType": "Debug",
+        "settings" : {
+          "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
+          "CMAKE_VERBOSE_MAKEFILE" : "ON",
+          "BOARD" : "DevEBox",
+          "DUMP_ASM": "ON"
+        } 
+      },
+      "DevEBox Release": {
+        "short": "DevEBox Release",
+        "buildType": "Release",
+        "settings" : {
+          "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
+          "CMAKE_VERBOSE_MAKEFILE" : "ON",
+          "BOARD" : "DevEBox",
           "DUMP_ASM": "ON"
         } 
       }
