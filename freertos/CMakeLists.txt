@@ -42,6 +42,9 @@ set(CMAKE_C_FLAGS "")
 set(CMAKE_CXX_FLAGS "")
 set(TAG_MASK "frtos_*")
 
+# Skip link step during toolchain validation.
+set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
+
 find_package(Git)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules/")

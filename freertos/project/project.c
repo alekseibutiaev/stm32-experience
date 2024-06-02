@@ -18,13 +18,11 @@ static StackType_t  Idle_Stack[configMINIMAL_STACK_SIZE];
 static StaticTask_t Timer_TCB;
 static StackType_t  Timer_Stack[configTIMER_TASK_STACK_DEPTH];
 
-#if 0
 int __io_putchar(int ch) {
   // Write character to ITM ch.0
   ITM_SendChar(ch);
   return(ch);
 }
-#endif
 
 void vApplicationStackOverflowHook(TaskHandle_t task, char* name) {
   return;
