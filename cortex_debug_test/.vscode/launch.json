@@ -7,7 +7,7 @@
       "request": "launch",
       "type": "cortex-debug",
       "servertype": "openocd",
-      "preLaunchTask": "build",
+      "preLaunchTask": "CMake Build",
       "preLaunchCommands": [ "load", "enable breakpoint", "monitor reset" ],
       "postLaunchCommands": ["monitor reset halt"],
       "openOCDLaunchCommands": [

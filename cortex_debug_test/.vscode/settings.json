@@ -2,6 +2,11 @@
   "cmake.setBuildTypeOnMultiConfig": false,
   "cmake.buildDirectory": "${workspaceFolder}/build_${buildType}",
   "cmake.saveBeforeBuild": true,
+  "cmake.default.buildDirectory": "${workspaceFolder}/build_${buildType}",
+  "cmake.default.generator": "Unix Makefiles",
+  "cmake.automaticReconfigure": false,
+  "cmake.useCMakePresets": "never",
+  "cmake.configureOnEdit": false,
   "cmake.configureArgs": [
     "-DCMAKE_TOOLCHAIN_FILE=tools_descriptor.cmake",
     "-DDUMP_ASM=OFF"
@@ -10,7 +15,9 @@
     "VERBOSE=1",
     "-j2"
   ],
+
   "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools",
+
   "files.associations": {
     "cstdint": "c",
     "stm32f1xx_hal_conf.h": "c",
@@ -20,38 +27,31 @@
     "project.h": "c",
     "errno.h": "c"
   },
+
   "editor.tabSize": 2,
   "memory-view.showMemoryPanel": true,
 
   "cortex-debug.liveWatchRefreshRate": 5000,
-
   "cortex-debug.armToolchainPrefix": "arm-none-eabi-",
 
   "x0-cortex-debug.armToolchainPath": "/opt/arm-none-eabi-stm32/bin",
   "x0-cortex-debug.armToolchainPath.linux": "/opt/arm-none-eabi-stm32/bin",
-
-  "x1-cortex-debug.armToolchainPath": "/opt/arm-none-eabi-arm/bin",
-  "x1-cortex-debug.armToolchainPath.linux": "/opt/arm-none-eabi-arm/bin",
-
-  "cortex-debug.armToolchainPath": "/usr/bin",
-  "cortex-debug.armToolchainPath.linux": "/usr/bin",
-
   "x0-cortex-debug.gdbPath": "/opt/arm-none-eabi-stm32/bin/arm-none-eabi-gdb",
   "x0-cortex-debug.gdbPath.linux": "/opt/arm-none-eabi-stm32/bin/arm-none-eabi-gdb",
-
-  "x1-cortex-debug.gdbPath": "/opt/arm-none-eabi-arm/bin/arm-none-eabi-gdb",
-  "x1-cortex-debug.gdbPath.linux": "/opt/arm-none-eabi-arm/bin/arm-none-eabi-gdb",
-
-  "cortex-debug.gdbPath": "/usr/bin/gdb-multiarch",
-  "cortex-debug.gdbPath.linux": "/usr/bin/gdb-multiarch",
-
   "x0-cortex-debug.objdumpPath": "/opt/arm-none-eabi-stm32/bin/arm-none-eabi-objdump",
   "x0-cortex-debug.objdumpPath.linux": "/opt/arm-none-eabi-stm32/bin/arm-none-eabi-objdump",
 
+  "x1-cortex-debug.armToolchainPath": "/opt/arm-none-eabi-arm/bin",
+  "x1-cortex-debug.armToolchainPath.linux": "/opt/arm-none-eabi-arm/bin",
+  "x1-cortex-debug.gdbPath": "/opt/arm-none-eabi-arm/bin/arm-none-eabi-gdb",
+  "x1-cortex-debug.gdbPath.linux": "/opt/arm-none-eabi-arm/bin/arm-none-eabi-gdb",
   "x1-cortex-debug.objdumpPath": "/opt/arm-none-eabi-arm/bin/arm-none-eabi-objdump",
   "x1-cortex-debug.objdumpPath.linux": "/opt/arm-none-eabi-arm/bin/arm-none-eabi-objdump",
 
-
+  "cortex-debug.armToolchainPath": "/usr/bin",
+  "cortex-debug.armToolchainPath.linux": "/usr/bin",
+  "cortex-debug.gdbPath": "/usr/bin/gdb-multiarch",
+  "cortex-debug.gdbPath.linux": "/usr/bin/gdb-multiarch",
   "cortex-debug.objdumpPath": "/usr/bin/arm-none-eabi-objdump",
   "cortex-debug.objdumpPath.linux": "/usr/bin/arm-none-eabi-objdump",
 
