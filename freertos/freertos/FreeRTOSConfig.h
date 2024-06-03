@@ -11,11 +11,20 @@
 #define configUSE_PREEMPTION 1
 #define configSUPPORT_STATIC_ALLOCATION 1
 #define configSUPPORT_DYNAMIC_ALLOCATION 1
-#define configUSE_IDLE_HOOK 0
-#define configUSE_TICK_HOOK 0
 #define configCPU_CLOCK_HZ (SystemCoreClock)
 #define configTICK_RATE_HZ ((TickType_t)1000)
 #define configMAX_PRIORITIES (5)
+#define configUSE_IDLE_HOOK 1
+/******************************************************************************/
+/* Set to 1 if you wish to use an idle hook, or 0 to omit an idle hook.       */
+/* Define a function that has the following name and prototype:               */
+/* void vApplicationIdleHook(void);                                           */
+/******************************************************************************/
+#define configUSE_TICK_HOOK 0
+/******************************************************************************/
+/* configMINIMAL_STACK_SIZE                                                   */
+/* The size of the stack used by the idle task.
+/******************************************************************************/
 #define configMINIMAL_STACK_SIZE ((uint16_t)128)
 #define configTOTAL_HEAP_SIZE ((size_t) (16 * 1024))
 #define configUSE_TRACE_FACILITY 1

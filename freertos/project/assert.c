@@ -1,7 +1,7 @@
 #include <FreeRTOS.h>
 #include <task.h>
 
-void vAssertCalled( unsigned long ulLine, const char * const pcFileName ) {
+void vAssertCalled( unsigned long ulLine, const char* const pcFileName) {
   static portBASE_TYPE xPrinted = pdFALSE;
   volatile uint32_t ulSetToNonZeroInDebuggerToContinue = 0;
     /* Parameters are not used. */
