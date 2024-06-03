@@ -26,7 +26,7 @@
 /* The size of the stack used by the idle task.
 /******************************************************************************/
 #define configMINIMAL_STACK_SIZE ((uint16_t)128)
-#define configTOTAL_HEAP_SIZE ((size_t) (16 * 1024))
+#define configTOTAL_HEAP_SIZE ((size_t) (8 * 1024))
 #define configUSE_TRACE_FACILITY 1
 #define configUSE_16_BIT_TICKS 0
 #define configUSE_MUTEXES 1
@@ -38,6 +38,8 @@
 #define configUSE_STATS_FORMATTING_FUNCTIONS 1
 #define configCHECK_FOR_STACK_OVERFLOW 3
 #define configCHECK_HANDLER_INSTALLATION 1
+#define onfigRECORD_STACK_HIGH_ADDRESS 1
+
 
 /* Software timer definitions. */
 #define configUSE_TIMERS 1

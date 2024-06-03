@@ -3,7 +3,6 @@
 
 #include <FreeRTOS.h>
 #include <task.h>
-#include <queue.h>
 
 #include <main.h>
 
@@ -20,17 +19,6 @@ static void recursion(uint32_t count, uint32_t* deep) {
   }
 }
 
-static void show_stack_deep(QueueHandle_t queue, const uint32_t start,
-    const uint32_t curdeep) {
-  char* str = pvPortMalloc(__STR_SIZE__);
-  if(0 != str) {
-    str[snprintf(str, __STR_SIZE__ - 1, "first_task deep recursion %ld",
-      (start - curdeep)/sizeof(void*))] = 0;
-    if(!xQueueSend(queue, &str, 0))
-      vPortFree(str);
-  }
-}
-
 void first_task(void* param) {
   const uint32_t start = __get_PSP();
   uint32_t idx = 0;
@@ -38,7 +26,8 @@ void first_task(void* param) {
     uint32_t deep = start;
     HAL_GPIO_TogglePin(led0_GPIO_Port, led0_Pin);
     recursion(idx++  % __MAX_RECURSION__, &deep);
-    show_stack_deep((QueueHandle_t)param, start, deep);
+    put_to_queue(param, print_log("first_task deep recursion %ld",
+      (start - deep)/sizeof(void*)));
     vTaskDelay(1000);
   }
 }
