@@ -77,6 +77,7 @@ See http://www.FreeRTOS.org/RTOS-Cortex-M3-M4.html. */
 
 #define INCLUDE_vTaskDelay 1
 #define INCLUDE_uxTaskGetStackHighWaterMark 1
+#define INCLUDE_vTaskSuspend 1
 
 
 /* Definitions that map the FreeRTOS port interrupt handlers to their CMSIS

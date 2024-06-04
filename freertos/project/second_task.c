@@ -14,8 +14,6 @@ void second_task(void* param) {
   for(;;) {
     HAL_GPIO_TogglePin(led1_GPIO_Port, led1_Pin);
     vTaskDelay(500);
-    put_to_queue(param, print_log("second_task iteration %ld", i++));
-
-    //printf("out %d\n", i++);
+    logout("second_task iteration %ld", i++);
   }
 }

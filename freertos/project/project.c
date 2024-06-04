@@ -11,7 +11,9 @@
 
 #include "first_task.h"
 #include "second_task.h"
+#include "imanager.h"
 
+#include "tools.h"
 #include "project.h"
 
 /* Idle task control block and stack */
@@ -27,17 +29,6 @@ int __io_putchar(int ch) {
   ITM_SendChar(ch);
   return(ch);
 }
-
-static QueueHandle_t queue = 0;
-
-void vApplicationIdleHook(void) {
-  char* buf = 0;
-  if(0 != xQueueReceive(queue, &buf, (TickType_t)0)) {
-    puts(buf);
-    vPortFree(buf);
-  }
-}
-
 
 void vApplicationStackOverflowHook(TaskHandle_t task, char* name) {
   return;
@@ -63,10 +54,8 @@ void vApplicationGetTimerTaskMemory (StaticTask_t** ppxTimerTaskTCBBuffer,
 }
 
 void start(void) {
-  if(0 != (queue = xQueueCreate(10, sizeof(void*)))) {
-    xTaskCreate(first_task, "FIRST", 128 * sizeof(void*), (void*)queue, 1, 0);
-    xTaskCreate(second_task, "SECOND", 128 * sizeof(void*), (void*)queue, 1, 0);
-    vTaskStartScheduler();
-  }
-  printf("Queue is not created.\n");
+  xTaskCreate(first_task, "FIRST", 128 * sizeof(void*), 0, 1, 0);
+  xTaskCreate(second_task, "SECOND", 128 * sizeof(void*), 0, 1, 0);
+  xTaskCreate(ist_task, "IMG", 128 * sizeof(void*), 0, 1, 0);
+  vTaskStartScheduler();
 }

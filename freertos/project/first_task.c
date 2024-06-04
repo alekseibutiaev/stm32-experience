@@ -26,8 +26,7 @@ void first_task(void* param) {
     uint32_t deep = start;
     HAL_GPIO_TogglePin(led0_GPIO_Port, led0_Pin);
     recursion(idx++  % __MAX_RECURSION__, &deep);
-    put_to_queue(param, print_log("first_task deep recursion %ld",
-      (start - deep)/sizeof(void*)));
+    logout("first_task deep recursion %ld", (start - deep)/sizeof(void*));
     vTaskDelay(1000);
   }
 }

@@ -9,18 +9,28 @@
 
 #define __STR_SIZE__ 64
 
-char* print_log(const char* fmt, ...) {
+static QueueHandle_t msgq = 0;
+
+void vApplicationIdleHook(void) {
+  char* buf = 0;
+  if(0 != xQueueReceive(msgq, &buf, (TickType_t)0)) {
+    puts(buf);
+    vPortFree(buf);
+  }
+}
+
+void logout(const char* fmt, ...) {
+  if(0 == msgq) {
+    if(0 == (msgq = xQueueCreate(10, sizeof(void*))))
+    return;
+  }
   char* str = pvPortMalloc(__STR_SIZE__);
   if(0 != str) {
     va_list args;
     va_start(args, fmt);
     str[vsnprintf(str, __STR_SIZE__ - 1, fmt, args)] = 0;
     va_end(args);
+    if(!xQueueSend(msgq, &str, 0))
+      vPortFree(str);
   }
-  return str;
-}
-
-void put_to_queue(void* queue, char* value) {
-  if(0 != value && !xQueueSend((QueueHandle_t)queue, &value, 0))
-    vPortFree(value);
 }
