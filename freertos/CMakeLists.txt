@@ -214,7 +214,7 @@ add_custom_command(
   OUTPUT upload_cmd
   DEPENDS ${CMAKE_PROJECT_NAME}
   COMMAND touch upload_cmd
-  COMMAND openocd -f ${CMAKE_SOURCE_DIR}/${CMAKE_PROJECT_NAME}.ocd.cfg
+  COMMAND openocd -f ${CMAKE_SOURCE_DIR}/openocd.cfg/software_system_reset.cfg
     -c \"program ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.bin 0x08000000 verify reset exit\"
 )
 

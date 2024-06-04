@@ -5,8 +5,8 @@
   #include <stdint.h>
   extern uint32_t SystemCoreClock;
   void xPortSysTickHandler(void);
+  void vAssertCalled(const char* const pcFileName, unsigned long ulLine);
 #endif
-
 
 #define configUSE_PREEMPTION 1
 #define configSUPPORT_STATIC_ALLOCATION 1
@@ -23,7 +23,7 @@
 #define configUSE_TICK_HOOK 0
 /******************************************************************************/
 /* configMINIMAL_STACK_SIZE                                                   */
-/* The size of the stack used by the idle task.
+/* The size of the stack used by the idle task.                               */
 /******************************************************************************/
 #define configMINIMAL_STACK_SIZE ((uint16_t)128)
 #define configTOTAL_HEAP_SIZE ((size_t) (8 * 1024))
