@@ -11,7 +11,6 @@
 #          make -C Release VERBOSE=1
 #############################################################################################################################
 cmake_minimum_required(VERSION 3.20)
-
 ###################### CONSTANTS ######################################
 set (PROJECT_NAME                     "freertos")
 set (PROJECT_TYPE_EXECUTABLE          "exe")
@@ -95,10 +94,7 @@ file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS
 
 #######################################################################
 
-
 ################## PROJECT SETUP ######################################
-
-#include_directories(${PROJECT_INCLUDES})
 
 set(CMAKE_EXECUTABLE_SUFFIX ".elf")
 set(CMAKE_STATIC_LIBRARY_SUFFIX ".a")
@@ -219,4 +215,3 @@ add_custom_command(
 )
 
 add_custom_target(upload DEPENDS upload_cmd)
-
