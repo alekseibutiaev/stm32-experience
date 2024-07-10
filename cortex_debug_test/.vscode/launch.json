@@ -14,7 +14,7 @@
         "adapter speed 4000"
       ],
       "configFiles": [
-        "${workspaceRoot}/openocd.cfg/hardware_reset_connect_under_reset.cfg"
+        "${workspaceRoot}/openocd.cfg/software_system_reset.cfg"
       ],
       "searchDir": [],
       "runToEntryPoint": "main",
