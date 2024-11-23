@@ -7,12 +7,12 @@
   "cmake.setBuildTypeOnMultiConfig": false,
   "cmake.buildDirectory": "${workspaceFolder}/build_${buildType}",
   "cmake.saveBeforeBuild": true,
-  "cmake.configureArgs1": [
+  "cmake.configureArgs": [
     "-DCMAKE_TOOLCHAIN_FILE=tools_descriptor.cmake",
     "-DBOARD_NUCLEO=ON",
     "-DMCU_TYPE=F105RB",
     "-DDUMP_ASM=OFF",
-    "-DVBUS_ACTIVE_HIGH=ON"
+    "-DVBUS_ACTIVE_HIGH=OFF"
   ],
   "cmake.buildToolArgs": [
     "VERBOSE=1",

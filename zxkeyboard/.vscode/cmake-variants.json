@@ -291,8 +291,8 @@
         "buildType": "Debug",
         "settings" : {
           "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
-          "BOARD_NUCLEO": "OFF",
           "CMAKE_VERBOSE_MAKEFILE" : "ON",
+          "BOARD_NUCLEO": "OFF",
           "DUMP_ASM": "OFF",
           "VBUS_ACTIVE_HIGH": "OFF",
           "MCU_TYPE": "F107RC"
@@ -303,8 +303,8 @@
         "buildType": "Debug",
         "settings" : {
           "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
-          "BOARD_NUCLEO": "ON",
           "CMAKE_VERBOSE_MAKEFILE" : "ON",
+          "BOARD_NUCLEO": "ON",
           "DUMP_ASM": "OFF",
           "MCU_TYPE": "F107RC"
         }
@@ -325,8 +325,8 @@
         "buildType": "Release",
         "settings" : {
           "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
-          "BOARD_NUCLEO": "OFF",
           "CMAKE_VERBOSE_MAKEFILE" : "ON",
+          "BOARD_NUCLEO": "OFF",
           "DUMP_ASM": "OFF",
           "VBUS_ACTIVE_HIGH": "OFF",
           "MCU_TYPE": "F107RC"
@@ -337,8 +337,8 @@
         "buildType": "Release",
         "settings" : {
           "CMAKE_TOOLCHAIN_FILE": "tools_descriptor.cmake",
-          "BOARD_NUCLEO": "ON",
           "CMAKE_VERBOSE_MAKEFILE" : "ON",
+          "BOARD_NUCLEO": "ON",
           "DUMP_ASM": "OFF",
           "MCU_TYPE": "F107RC"
         }

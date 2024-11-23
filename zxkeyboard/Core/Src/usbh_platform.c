@@ -36,9 +36,9 @@
 void MX_DriverVbusFS(uint8_t state) {
   /* USER CODE END PREPARE_GPIO_DATA_VBUS_FS */
 #if defined(ACTIVE_HIGH)
-  #define STATUS (state ? GPIO_PIN_RESET : GPIO_PIN_SET)
-#else
   #define STATUS (state ? GPIO_PIN_SET : GPIO_PIN_RESET)
+#else
+  #define STATUS (state ? GPIO_PIN_RESET : GPIO_PIN_SET)
 #endif
   HAL_GPIO_WritePin(USB_POWER_SWITCH_ON_GPIO_Port, USB_POWER_SWITCH_ON_Pin, STATUS);
 }
