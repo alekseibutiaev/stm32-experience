@@ -1,47 +1,46 @@
 {
   "configurations": [
     {
-      "name": "J-link Lounch Keyboard",
       "cwd": "${workspaceRoot}",
-      "executable": "${workspaceRoot}/build_Debug/zxkeyboard.elf",
+      "executable": "${command:cmake.buildDirectory}/zxkeyboard.elf",
+      "name": "Debug with OpenOCD",
       "request": "launch",
-      "type": "cortex-arm-learning",
-      "device": "STM32F105RC",
-      "interface": "swd",
-      "servertype": "jlink",
-      "runToMain": true
-    },
-    {
-      "name": "J-link Attach Keyboard",
-      "cwd": "${workspaceRoot}",
-      "executable": "${workspaceRoot}/build_Debug/zxkeyboard.elf",
-      "request": "attach",
-      "type": "cortex-arm-learning",
-      "device": "STM32F105RC",
-      "interface": "swd",
-      "servertype": "jlink",
-    },
-    {
-      "name": "st-link Lounch Keyboard",
-      "cwd": "${workspaceRoot}",
-      "executable": "${workspaceRoot}/build_Debug/zxkeyboard.elf",
-      "request": "launch",
-      "type": "cortex-arm-learning",
-      "servertype": "stutil",
-      "interface": "swd",
-      "runToMain": true,
-      "device": "STM32F107RC",
-      "swoConfig": {}
-    },
-    {
-      "name": "st-link Attach Keyboard",
-      "cwd": "${workspaceRoot}",
-      "executable": "${workspaceRoot}/build_Debug/zxkeyboard.elf",
-      "request": "attach",
-      "type": "cortex-arm-learning",
-      "servertype": "stutil",
-      "interface": "swd",
-      "device": "STM32F107RC",
+      "type": "cortex-debug",
+      "servertype": "openocd",
+      "preLaunchTask": "Cmake: upload",
+      "preLaunchCommands": [ "load", "enable breakpoint", "monitor reset" ],
+      "postLaunchCommands": ["monitor reset halt"],
+      "openOCDLaunchCommands": [
+        "adapter speed 4000"
+      ],
+      "configFiles": [
+        "${workspaceRoot}/openocd.cfg/software_system_reset.cfg"
+      ],
+      "searchDir": [],
+      "runToEntryPoint": "main",
+      "showDevDebugOutput": "none",
+      "svdFile": "STM32F107.svd",
+      "swoConfig": {
+        "enabled": true,
+        "source": "probe",
+        "swoFrequency": 2000000,
+        "cpuFrequency": 72000000,
+        "swoPort": "5555",
+        "decoders": [
+          {
+            "port": 1,
+            "type": "console",
+            "label": "SWO output",
+            "encoding":"ascii"
+          },
+          {
+            "port": 10,
+            "type": "console",
+            "label": "SWO output",
+            "encoding":"ascii"
+          }
+        ]
+      }
     }
   ]
 }

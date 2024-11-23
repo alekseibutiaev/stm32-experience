@@ -180,22 +180,12 @@ if (${DUMP_ASM})
     COMMAND ${CMAKE_OBJDUMP} -D $<TARGET_FILE:${CMAKE_PROJECT_NAME}> > ${CMAKE_PROJECT_NAME}.s)
 endif()
 
-add_custom_command(OUTPUT jlink_cmd_script
-    COMMAND echo "device ${DEVICE}" >> jlink_cmd_script
-    COMMAND echo "if swd" >> jlink_cmd_script
-    COMMAND echo "Speed 4000" >> jlink_cmd_script
-    COMMAND echo "LoadFile ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.bin 0x08000000" >> jlink_cmd_script
-    COMMAND echo "Exit" >> jlink_cmd_script
-    VERBATIM
+add_custom_command(
+  OUTPUT upload_cmd
+  DEPENDS ${CMAKE_PROJECT_NAME}
+  COMMAND touch upload_cmd
+  COMMAND openocd -f ${CMAKE_SOURCE_DIR}/openocd.cfg/core_reset.cfg -c \"program ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.bin 0x08000000 verify reset exit\"
 )
 
-add_custom_target(jlink_upload DEPENDS ${CMAKE_PROJECT_NAME} jlink_cmd_script
-    COMMAND cat jlink_cmd_script
-    COMMAND ${JLINKEXE} -CommanderScript jlink_cmd_script
-)
-
-add_custom_target(stlink_upload DEPENDS ${CMAKE_PROJECT_NAME}
-    COMMAND echo "run ${ST-UTILS} write ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.bin 0x08000000"
-    COMMAND ${ST-UTILS} write ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.bin 0x08000000
-)
+add_custom_target(upload DEPENDS upload_cmd)
 

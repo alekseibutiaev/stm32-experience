@@ -1,27 +1,16 @@
 {
-  "version": "2.0.0",
+  "version":"2.0.0",
   "tasks": [
     {
-      "label": "CMake Build test !!!!!!!",
-      "command": "${command:cmake.build}",
-      "type": "shell",
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      }
-    },
-    {
-      "label": "MY Task",
-      "command": "pwd",
-      "type": "shell"
-    },
-    {
-      "label": "st-link upload",
-      "command": "make",
-      "args": ["stlink_upload"],
-      "problemMatcher": {
-        "fileLocation": ["relative","${workspaceRoot/build_Release"]
-      }
+      "type": "cmake",
+      "label": "Cmake: upload",
+      "command": "build",
+      "targets": [
+        "upload"
+      ],
+      "group": "build",
+      "problemMatcher": [],
+      "detail": "CMake upload"
     }
   ]
 }
