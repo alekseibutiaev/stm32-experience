@@ -4,7 +4,7 @@
 
 build_keyboard() {
   cmakeparam="-DCMAKE_VERBOSE_MAKEFILE:STRING=ON -DCMAKE_TOOLCHAIN_FILE:STRING=tools_descriptor.cmake -DDUMP_ASM:STRING=OFF"
-  cmakeparam=`echo "${cmakeparam} -DCMAKE_BUILD_TYPE:STRING=${1} -DMCU_TYPE:STRING=${2} -DVBUS_ACTIVE_HIGH:STRING=${3} -DBOARD_NUCLEO:STRING=${4}"`
+  cmakeparam=`echo "${cmakeparam} -DCMAKE_BUILD_TYPE:STRING=${1} -DMCU_TYPE:STRING=${2} -DUSB_POWER_HIGH:STRING=${3} -DBOARD_NUCLEO:STRING=${4}"`
   dir=`echo "build_${1}_${2}"`
   if [ ${3} == "OFF" ] ; then
     dir=`echo ${dir}"_high"`

@@ -48,12 +48,16 @@ find_package(Git)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
-option(BOARD_NUCLEO "type of board" ON)
-option(MCU_TYPE "MCU type F105R8, F105RB, F105RC, F107RB, F107RC. F105R8 by default" "F105R8")
-option(DUMP_ASM "Create full assembly of final executable" OFF)
-option(VBUS_ACTIVE_HIGH "USB VBUS active high" ON)
+option(BOARD_NUCLEO "type of board" FALSE)
+option(MCU_TYPE "MCU type F105R8, F105RB, F105RC, F107RB, F107RC. F105R8 by default" FALSE)
+option(DUMP_ASM "Create full assembly of final executable" FALSE)
+option(USB_POWER_HIGH "USB power control active high" TRUE)
 
 set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/linker/STM32${MCU_TYPE}Tx_FLASH.ld)
+
+if (NOT MCU_TYPE)
+  set(MCU_TYPE "F105R8")
+endif()
 
 if (${MCU_TYPE} STREQUAL "F105R8" OR ${MCU_TYPE} STREQUAL "F105RB" OR ${MCU_TYPE} STREQUAL "F105RC")
   set(STARTUP_SCRIPT ${CMAKE_SOURCE_DIR}/startup/startup_stm32f105xc.s)
@@ -66,10 +70,11 @@ else()
 endif()
 
 message("MCU_TYPE: " ${MCU_TYPE})
-message("LINKER_SCRIPT: " ${LINKER_SCRIPT})
 message("MCU_MODEL: " ${MCU_MODEL})
+message("LINKER_SCRIPT: " ${LINKER_SCRIPT})
 message("STARTUP_SCRIPT: " ${STARTUP_SCRIPT})
 message("DUMP_ASM: " ${DUMP_ASM})
+message("USB_POWER_HIGH: " ${USB_POWER_HIGH})
 
 set(PROJECT_INCLUDES
   ${CMAKE_SOURCE_DIR}/Core/Inc
@@ -99,7 +104,6 @@ file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS
 
 #######################################################################
 
-
 ################## PROJECT SETUP ######################################
 
 #include_directories(${PROJECT_INCLUDES})
@@ -109,12 +113,11 @@ set(CMAKE_STATIC_LIBRARY_SUFFIX ".a")
 set(CMAKE_C_FLAGS "${MCPU} -std=gnu11 ${MFPU} ${MFLOAT_ABI} ${RUNTIME_LIBRARY} -mthumb -Wall -Werror")
 set(CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS} -x assembler-with-cpp")
 
-
 project(${PROJECT_NAME})
 enable_language(ASM C CXX)
 
 add_custom_target(version
-${CMAKE_COMMAND}
+  ${CMAKE_COMMAND}
   -D SRC=${CMAKE_SOURCE_DIR}/version.h.in
   -D DST=${CMAKE_BINARY_DIR}/version.h
   -D GIT_EXECUTABLE=${GIT_EXECUTABLE}
@@ -132,7 +135,7 @@ add_dependencies(${CMAKE_PROJECT_NAME} version)
 
 target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
   $<$<CONFIG:Debug>:DEBUG>
-  $<$<BOOL:${VBUS_ACTIVE_HIGH}>:ACTIVE_HIGH>
+  $<$<BOOL:${USB_POWER_HIGH}>:USB_POWER_HIGH>
   $<$<BOOL:${BOARD_NUCLEO}>:NUCLEO>
   ${MCU_MODEL}
   USE_HAL_DRIVER

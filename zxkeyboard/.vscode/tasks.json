@@ -3,7 +3,7 @@
   "tasks": [
     {
       "type": "cmake",
-      "label": "Cmake: upload",
+      "label": "CNake: upload",
       "command": "build",
       "targets": [
         "upload"

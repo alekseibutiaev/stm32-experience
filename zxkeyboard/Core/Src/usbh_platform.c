@@ -35,7 +35,7 @@
   */
 void MX_DriverVbusFS(uint8_t state) {
   /* USER CODE END PREPARE_GPIO_DATA_VBUS_FS */
-#if defined(ACTIVE_HIGH)
+#if defined(USB_POWER_HIGH)
   #define STATUS (state ? GPIO_PIN_SET : GPIO_PIN_RESET)
 #else
   #define STATUS (state ? GPIO_PIN_RESET : GPIO_PIN_SET)
